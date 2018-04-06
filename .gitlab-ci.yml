@@ -10,8 +10,8 @@ build-rust-latest:
     - docker:dind
   before_script:
     - docker version
-    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
-      --password-stdin $REGISTRY_HOSTNAME
+    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD
+      $REGISTRY_HOSTNAME
   script:
     - cd rust
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:latest latest
@@ -30,8 +30,8 @@ build-rust-nightly:
     - docker:dind
   before_script:
     - docker version
-    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
-      --password-stdin $REGISTRY_HOSTNAME
+    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD
+      $REGISTRY_HOSTNAME
   script:
     - cd rust
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:nightly nightly

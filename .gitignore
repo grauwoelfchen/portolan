@@ -1,2 +1,4 @@
 .env.ci
-tools/gitlab-ci-multi-runner
+
+/tmp
+/tools/gitlab-ci-multi-runner

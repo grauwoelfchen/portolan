@@ -1,22 +1,28 @@
 Portolan
 ========
 
-A collection of docker images steered by [gentoo](
-https://hub.docker.com/u/gentoo/) penguin, to ``portage`` packages ;)
+A collection of docker images steered by `gentoo`_
+penguin, to ``portage`` packages ;)
+
+.. _gentoo: https://hub.docker.com/u/gentoo/
+
+https://hub.docker.com/r/grauwoelfchen/
 
 
 Base images
 -----------
 
-* [gentoo/portage](https://hub.docker.com/r/gentoo/portage/)
-* [gentoo/stage3-amd64](https://hub.docker.com/r/gentoo/stage3-amd64/) (
-  nomultilib)
+* `gentoo/portage`_
+* `gentoo/stage3-amd64`_ (nomultilib)
+
+.. _gentoo/portage: https://hub.docker.com/r/gentoo/portage/
+.. _gentoo/stage3-amd64: https://hub.docker.com/r/gentoo/stage3-amd64/
 
 
 Docker images
 -------------
 
-* rust (``latest``, ``nightly``)
+* rust (``rust:latest``, ``rust:nightly``)
 
 
 License

@@ -1,3 +1,4 @@
 Sat 07 Apr 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add build jobs on CI (gitlab-ci)
 	* Add LICENSE file
 	* Add rust (latest, nightly)

@@ -1,7 +1,7 @@
 Portolan
 ========
 
-A collection of docker images steered by `gentoo`_
+A collection of docker images for container ships steered by `gentoo`_
 penguin, to ``portage`` packages ;)
 
 .. _gentoo: https://hub.docker.com/u/gentoo/

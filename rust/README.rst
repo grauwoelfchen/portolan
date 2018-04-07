@@ -1,17 +1,20 @@
 rust
 ====
 
-This image has ``rust`` build with ``rust-src`` component.
+This image has ``rust`` with default toolchains and ``rust-src`` component.
 
+
+Tags
+-----
 
 * latest
 * nightly
 
 
+Build
+-----
+
 .. code:: zsh
 
-    % docker build - < latest/Dockerfile
     % docker build -t grauwoelfchen/rust:latest latest
-
-    % docker build - < nightly/Dockerfile
     % docker build -t grauwoelfchen/rust:nightly nightly

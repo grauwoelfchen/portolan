@@ -4,7 +4,7 @@ FROM gentoo/stage3-amd64-nomultilib:latest
 MAINTAINER Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 
 
-COPY --from=portage --chown=root:root /usr/portage /usr/portage
+COPY --from=portage /usr/portage /usr/portage
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \

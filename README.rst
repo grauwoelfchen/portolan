@@ -22,8 +22,11 @@ Base images
 Docker images
 -------------
 
-* rust (``rust:latest``, ``rust:nightly``)
-* rust-ci-tools (``rust-ci-tools:nightly``)
+* `rust`_ (``rust:latest``, ``rust:nightly``)
+* `rust-ci-tools`_ (``rust-ci-tools:nightly``)
+
+.. _rust: https://hub.docker.com/r/grauwoelfchen/rust/
+.. _rust-ci-tools: https://hub.docker.com/r/grauwoelfchen/rust-ci-tools/
 
 
 License

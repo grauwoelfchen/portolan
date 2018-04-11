@@ -43,7 +43,7 @@ build-rust-nightly:
 
 build-rust-ci-tools-nightly:
   stage: build
-  image: grauwoelfchen/rust:nightly
+  image: docker:latest
   variables:
     CONTAINER_IMAGE: grauwoelfchen/rust-ci-tools
   services:

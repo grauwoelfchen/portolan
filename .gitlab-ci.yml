@@ -5,7 +5,8 @@ build-rust-latest:
   stage: build
   image: docker:latest
   variables:
-    CONTAINER_IMAGE: grauwoelfchen/rust
+    CONTAINER_NAME: grauwoelfchen/rust
+    CONTAINER_TAG: latest
   services:
     - docker:dind
   before_script:
@@ -14,10 +15,11 @@ build-rust-latest:
       --password-stdin $REGISTRY_HOSTNAME
   script:
     - cd rust
-    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:latest latest
-    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:latest
-      $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:latest
-    - docker push $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:latest
+    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      latest
+    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
   only:
     - release
 
@@ -25,7 +27,8 @@ build-rust-nightly:
   stage: build
   image: docker:latest
   variables:
-    CONTAINER_IMAGE: grauwoelfchen/rust
+    CONTAINER_NAME: grauwoelfchen/rust
+    CONTAINER_TAG: nightly
   services:
     - docker:dind
   before_script:
@@ -34,10 +37,11 @@ build-rust-nightly:
       --password-stdin $REGISTRY_HOSTNAME
   script:
     - cd rust
-    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:nightly nightly
-    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:nightly
-      $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:nightly
-    - docker push $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:nightly
+    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      nightly
+    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
   only:
     - release
 
@@ -45,7 +49,8 @@ build-rust-ci-tools-nightly:
   stage: build
   image: docker:latest
   variables:
-    CONTAINER_IMAGE: grauwoelfchen/rust-ci-tools
+    CONTAINER_NAME: grauwoelfchen/rust-ci-tools
+    CONTAINER_TAG:
   services:
     - docker:dind
   before_script:
@@ -54,9 +59,10 @@ build-rust-ci-tools-nightly:
       --password-stdin $REGISTRY_HOSTNAME
   script:
     - cd rust
-    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:nightly nightly
-    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:nightly
-      $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:nightly
-    - docker push $REGISTRY_HOSTNAME/$CONTAINER_IMAGE:nightly
+    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      nightly
+    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
   only:
     - release

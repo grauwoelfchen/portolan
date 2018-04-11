@@ -23,6 +23,7 @@ Docker images
 -------------
 
 * rust (``rust:latest``, ``rust:nightly``)
+* rust-ci-tools (``rust-ci-tools:nightly``)
 
 
 License

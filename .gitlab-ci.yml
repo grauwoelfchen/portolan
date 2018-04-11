@@ -50,7 +50,7 @@ build-rust-ci-tools-nightly:
   image: docker:latest
   variables:
     CONTAINER_NAME: grauwoelfchen/rust-ci-tools
-    CONTAINER_TAG:
+    CONTAINER_TAG: nightly
   services:
     - docker:dind
   before_script:

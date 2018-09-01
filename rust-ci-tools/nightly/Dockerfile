@@ -8,7 +8,7 @@ RUN set -eux; \
     emerge -qv dev-util/kcov; \
     \
     rustup component add rustfmt-preview --toolchain nightly; \
-    cargo +nightly install clippy; \
+    cargo +nightly install clippy --force; \
     \
     rustup --version; \
     rustc --version; \

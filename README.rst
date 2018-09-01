@@ -28,25 +28,25 @@ Docker images
 .. _rust: https://hub.docker.com/r/grauwoelfchen/rust/
 .. _rust-ci-tools: https://hub.docker.com/r/grauwoelfchen/rust-ci-tools/
 
-.. |rust-latest-pipeline| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-latest/pipeline.svg
+.. |rust-latest-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-latest/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-latest
 
-.. |rust-nightly-pipeline| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly/pipeline.svg
+.. |rust-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly
 
-.. |rust-ci-tools-nightly-pipeline| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-ci-tools-nightly/pipeline.svg
+.. |rust-ci-tools-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-ci-tools-nightly/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-ci-tools-nightly/pipeline.svg
 
 
-+-----------------+---------+-------------------------------+
-| Image           | Tag     | Build                         |
-+=================+=========+===============================+
-| |rust|          | latest  | |rust-latest-build|           |
-+-----------------+---------+-------------------------------+
-| |rust|          | nightly | |rust-nightly-build|          |
-+-----------------+---------+-------------------------------+
-| |rust-ci-tools| | nightly | |rust-ci-tools-nightly-build| |
-+-----------------+---------+-------------------------------+
++------------------+---------+-------------------------------+
+| Image            | Tag     | Build                         |
++==================+=========+===============================+
+| `rust`_          | latest  | |rust-latest-build|           |
++------------------+---------+-------------------------------+
+| `rust`_          | nightly | |rust-nightly-build|          |
++------------------+---------+-------------------------------+
+| `rust-ci-tools`_ | nightly | |rust-ci-tools-nightly-build| |
++------------------+---------+-------------------------------+
 
 
 License

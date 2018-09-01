@@ -12,6 +12,7 @@ ENV RUSTUP_HOME=/usr/local/rustup \
 
 RUN set -eux; \
     \
+    emerge --sync \
     eselect news read --quiet new >/dev/null 2>&1; \
     emerge -qv net-misc/curl; \
     \

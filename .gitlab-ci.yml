@@ -21,7 +21,7 @@ build-rust-latest:
       $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
     - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
   only:
-    - release
+    - rust-latest
 
 build-rust-nightly:
   stage: build
@@ -43,7 +43,7 @@ build-rust-nightly:
       $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
     - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
   only:
-    - release
+    - rust-nightly
 
 build-rust-ci-tools-nightly:
   stage: build
@@ -65,4 +65,4 @@ build-rust-ci-tools-nightly:
       $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
     - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
   only:
-    - release
+    - rust-ci-tools-nightly

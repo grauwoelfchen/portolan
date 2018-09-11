@@ -1,10 +1,16 @@
 Portolan
 ========
 
-A collection of docker images for container ships steered by `gentoo`_
-penguin, to ``portage`` packages ;)
+A collection of docker images for container ships steered by gentoo
+penguin, to ``portage`` packages.
 
-.. _gentoo: https://hub.docker.com/u/gentoo/
+These images are all built on top of `gentoo linux`_ images which are hosted on
+`Docker Hub`_ using automated build.
+
+**Portolan** is a type of book of charts for the ship ;)
+
+.. _gentoo linux: https://www.gentoo.org/
+.. _Docker Hub: https://hub.docker.com/u/gentoo/
 
 https://hub.docker.com/r/grauwoelfchen/
 
@@ -27,6 +33,26 @@ Docker images
 
 .. _rust: https://hub.docker.com/r/grauwoelfchen/rust/
 .. _rust-ci-tools: https://hub.docker.com/r/grauwoelfchen/rust-ci-tools/
+
+.. |rust-latest-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-latest/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-latest
+
+.. |rust-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly
+
+.. |rust-ci-tools-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-ci-tools-nightly/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-ci-tools-nightly/pipeline.svg
+
+
++------------------+---------+-------------------------------+
+| Image            | Tag     | Build                         |
++==================+=========+===============================+
+| `rust`_          | latest  | |rust-latest-build|           |
++------------------+---------+-------------------------------+
+| `rust`_          | nightly | |rust-nightly-build|          |
++------------------+---------+-------------------------------+
+| `rust-ci-tools`_ | nightly | |rust-ci-tools-nightly-build| |
++------------------+---------+-------------------------------+
 
 
 License

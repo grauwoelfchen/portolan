@@ -1,10 +1,16 @@
 Portolan
 ========
 
-A collection of docker images for container ships steered by `gentoo`_
-penguin, to ``portage`` packages ;)
+A collection of docker images for container ships steered by gentoo
+penguin, to ``portage`` packages.
 
-.. _gentoo: https://hub.docker.com/u/gentoo/
+These images are all built on top of `gentoo linux`_ images which are hosted on
+`Docker Hub`_ using automated build.
+
+**Portolan** is a type of book of charts for the ship ;)
+
+.. _gentoo linux: https://www.gentoo.org/
+.. _Docker Hub: https://hub.docker.com/u/gentoo/
 
 https://hub.docker.com/r/grauwoelfchen/
 

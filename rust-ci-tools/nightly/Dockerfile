@@ -1,6 +1,6 @@
 FROM grauwoelfchen/rust:nightly
 
-MAINTAINER Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+LABEL maintainer="Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 
 RUN set -eux; \
     \
@@ -15,4 +15,7 @@ RUN set -eux; \
     \
     kcov --version; \
     cargo fmt --version; \
-    cargo clippy --version;
+    cargo clippy --version
+
+WORKDIR /
+CMD ["/bin/bash"]

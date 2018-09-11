@@ -1,7 +1,7 @@
 Portolan
 ========
 
-A collection of docker images for container ships steered by gentoo
+A collection of dockerfiles for container ships steered by gentoo
 penguin, to ``portage`` packages.
 
 These images are all built on top of `gentoo linux`_ images which are hosted on

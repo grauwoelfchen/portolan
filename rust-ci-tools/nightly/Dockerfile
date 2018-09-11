@@ -16,3 +16,6 @@ RUN set -eux; \
     kcov --version; \
     cargo fmt --version; \
     cargo clippy --version;
+
+WORKDIR /
+CMD ["/bin/bash"]

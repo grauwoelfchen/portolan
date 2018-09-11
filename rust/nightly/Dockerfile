@@ -1,7 +1,7 @@
 FROM gentoo/portage:latest as portage
 FROM gentoo/stage3-amd64-nomultilib:latest
 
-MAINTAINER Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+LABEL maintainer="Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 
 COPY --from=portage /usr/portage /usr/portage
 
@@ -26,7 +26,7 @@ RUN set -eux; \
     \
     rustup --version; \
     rustc --version; \
-    cargo --version;
+    cargo --version
 
 WORKDIR /
 CMD ["/bin/bash"]

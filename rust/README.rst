@@ -24,5 +24,5 @@ Run
 
 .. code:: zsh
 
-   % docker container run -it grauwoelfchen/rust:latest rustc --version
-   % docker container run -it grauwoelfchen/rust:nightly rustc --version
+   % docker container run -it --rm grauwoelfchen/rust:latest rustc --version
+   % docker container run -it --rm grauwoelfchen/rust:nightly rustc --version

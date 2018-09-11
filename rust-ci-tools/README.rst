@@ -29,6 +29,6 @@ Run
 
 .. code:: zsh
 
-   % docker container run -it grauwoelfchen/rust-ci-tools:nightly \
+   % docker container run -it --rm grauwoelfchen/rust-ci-tools:nightly \
      rustc --version; cargo fmt --version; cargo clippy --version; \
      kcov --version

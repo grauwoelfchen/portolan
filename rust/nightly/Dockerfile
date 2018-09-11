@@ -26,7 +26,7 @@ RUN set -eux; \
     \
     rustup --version; \
     rustc --version; \
-    cargo --version;
+    cargo --version
 
 WORKDIR /
 CMD ["/bin/bash"]

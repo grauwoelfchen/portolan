@@ -20,6 +20,8 @@ build-rust-latest:
     - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
       $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
     - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+  after_script:
+    - docker logout
   only:
     - rust-latest
 
@@ -42,6 +44,8 @@ build-rust-nightly:
     - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
       $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
     - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+  after_script:
+    - docker logout
   only:
     - rust-nightly
 
@@ -64,5 +68,7 @@ build-rust-ci-tools-nightly:
     - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
       $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
     - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+  after_script:
+    - docker logout
   only:
     - rust-ci-tools-nightly

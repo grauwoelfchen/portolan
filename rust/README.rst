@@ -18,3 +18,11 @@ Build
 
     % docker build -t grauwoelfchen/rust:latest latest
     % docker build -t grauwoelfchen/rust:nightly nightly
+
+Run
+---
+
+.. code:: zsh
+
+   % docker run -it grauwoelfchen/rust:latest rustc --version
+   % docker run -it grauwoelfchen/rust:nightly rustc --version

@@ -3,13 +3,13 @@ FROM gentoo/stage3-amd64-nomultilib:latest
 
 MAINTAINER Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 
-
 COPY --from=portage /usr/portage /usr/portage
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH
 
+WORKDIR /tmp
 RUN set -eux; \
     \
     emerge --sync; \
@@ -27,3 +27,6 @@ RUN set -eux; \
     rustup --version; \
     rustc --version; \
     cargo --version;
+
+WORKDIR /
+CMD ["/bin/bash"]

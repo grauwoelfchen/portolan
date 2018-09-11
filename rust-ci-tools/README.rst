@@ -23,3 +23,12 @@ Build
 .. code:: zsh
 
     % docker build -t grauwoelfchen/rust-ci-tools:nightly nightly
+
+Run
+---
+
+.. code:: zsh
+
+   % docker run -it grauwoelfchen/rust-ci-tools:nightly \
+     rustc --version; cargo fmt --version; cargo clippy --version; \
+     kcov --version

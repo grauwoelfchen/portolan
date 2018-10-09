@@ -10,22 +10,23 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     PATH=/usr/local/cargo/bin:$PATH
 
 WORKDIR /tmp
-RUN set -eux; \
+RUN set -eux && \
     \
-    emerge --sync; \
-    eselect news read --quiet new >/dev/null 2>&1; \
-    emerge -qv net-misc/curl; \
+    emerge --sync && \
+    eselect news read --quiet new >/dev/null 2>&1 && \
+    emerge -qv net-misc/curl && \
     \
-    url="https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init"; \
-    curl -sSfLO "$url"; \
-    chmod +x rustup-init; \
-    ./rustup-init -y --no-modify-path --default-toolchain nightly; \
-    rm rustup-init; \
-    chmod -R a+w $RUSTUP_HOME $CARGO_HOME; \
-    rustup component add rust-src; \
+    platform="x86_64-unknown-linux-gnu" && \
+    url="https://static.rust-lang.org/rustup/dist/${platform}/rustup-init" && \
+    curl -sSfLO "$url" && \
+    chmod +x rustup-init && \
+    ./rustup-init -y --no-modify-path --default-toolchain nightly && \
+    rm rustup-init && \
+    chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
+    rustup component add rust-src && \
     \
-    rustup --version; \
-    rustc --version; \
+    rustup --version && \
+    rustc --version && \
     cargo --version
 
 WORKDIR /

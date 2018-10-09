@@ -2,19 +2,22 @@ FROM grauwoelfchen/rust:nightly
 
 LABEL maintainer="Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 
-RUN set -eux; \
+RUN set -eux && \
     \
-    echo "=dev-util/kcov-34 ~amd64" >> /etc/portage/package.accept_keywords/kcov; \
-    emerge -qv dev-util/kcov; \
+    accept_keywords=/etc/portage/package.accept_keywords && \
+    mkdir -p $accept_keywords && \
+    echo "=dev-util/kcov-34 ~amd64" >> $accept_keywords/kcov && \
+    emerge -qv dev-util/kcov && \
     \
-    rustup component add rustfmt-preview clippy-preview --toolchain nightly; \
+    rustup component add rustfmt-preview clippy-preview \
+      --toolchain nightly && \
     \
-    rustup --version; \
-    rustc --version; \
-    cargo --version; \
+    rustup --version && \
+    rustc --version && \
+    cargo --version && \
     \
-    kcov --version; \
-    cargo fmt --version; \
+    kcov --version && \
+    cargo fmt --version && \
     cargo clippy --version
 
 WORKDIR /

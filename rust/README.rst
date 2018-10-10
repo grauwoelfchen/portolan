@@ -1,4 +1,4 @@
-rust
+Rust
 ====
 
 This image has ``rust`` with default toolchains and ``rust-src`` component.

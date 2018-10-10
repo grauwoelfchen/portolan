@@ -6,8 +6,9 @@ RUN set -eux && \
     \
     accept_keywords=/etc/portage/package.accept_keywords && \
     mkdir -p $accept_keywords && \
-    echo "=dev-util/kcov-34 ~amd64" >> $accept_keywords/kcov && \
-    emerge -qv dev-util/kcov && \
+    echo "dev-util/kcov ~amd64" >> $accept_keywords/kcov && \
+    emerge -qv sys-libs/binutils-libs \
+               dev-util/kcov && \
     \
     rustup component add rustfmt-preview clippy-preview \
       --toolchain nightly && \

@@ -25,6 +25,30 @@ build-rust-latest:
   only:
     - rust-latest
 
+build-rust-latest-fearless:
+  stage: build
+  image: docker:latest
+  variables:
+    CONTAINER_NAME: grauwoelfchen/rust
+    CONTAINER_TAG: latest-fearless
+  services:
+    - docker:dind
+  before_script:
+    - docker version
+    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
+      --password-stdin $REGISTRY_HOSTNAME
+  script:
+    - cd rust
+    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      latest-fearless
+    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+  after_script:
+    - docker logout
+  only:
+    - rust-latest-fearless
+
 build-rust-nightly:
   stage: build
   image: docker:latest
@@ -48,6 +72,30 @@ build-rust-nightly:
     - docker logout
   only:
     - rust-nightly
+
+build-rust-nightly-fearless:
+  stage: build
+  image: docker:latest
+  variables:
+    CONTAINER_NAME: grauwoelfchen/rust
+    CONTAINER_TAG: nightly-fearless
+  services:
+    - docker:dind
+  before_script:
+    - docker version
+    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
+      --password-stdin $REGISTRY_HOSTNAME
+  script:
+    - cd rust
+    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      nightly-fearless
+    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+  after_script:
+    - docker logout
+  only:
+    - rust-nightly-fearless
 
 build-rust-ci-tools-nightly:
   stage: build

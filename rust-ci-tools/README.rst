@@ -1,4 +1,4 @@
-rust-ci-tools
+Rust CI Tools
 =============
 
 These images are based on `grauwoelfchen/rust`_, and have following components
@@ -6,9 +6,9 @@ for CI.
 
 .. _grauwoelfchen/rust: https://hub.docker.com/r/grauwoelfchen/rust/
 
-* kcov (v34)
+* kcov (with sys-libs/binutils-libs)
 * rustfmt (rustfmt-preview)
-* clippy
+* clippy (clippy-preview)
 
 
 Tags

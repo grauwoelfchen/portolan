@@ -28,8 +28,20 @@ Base images
 Docker images
 -------------
 
-* `rust`_ (``rust:latest``, ``rust:nightly``)
-* `rust-ci-tools`_ (``rust-ci-tools:nightly``)
+* `rust`_
+
+  * ``rust:latest`` ... latest rust and toolchains with source
+
+  * ``rust:latest-fearless`` ... + `emerge --sync`
+
+  * ``rust:nightly`` ... nightly rust and toolchains with source
+
+  * ``rust:nightly-fearless`` ... + `emerge --sync`
+
+* `rust-ci-tools`_
+
+  * ``rust-ci-tools:nightly`` ... rustfmt-preview, clippy-preview and kcov
+    (nightly only)
 
 .. _rust: https://hub.docker.com/r/grauwoelfchen/rust/
 .. _rust-ci-tools: https://hub.docker.com/r/grauwoelfchen/rust-ci-tools/
@@ -37,22 +49,32 @@ Docker images
 .. |rust-latest-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-latest/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-latest
 
+.. |rust-latest-fearless-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-latest-fearless/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-latest-fearless
+
 .. |rust-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly
+
+.. |rust-nightly-fearless-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly-fearless/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly-fearless
 
 .. |rust-ci-tools-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-ci-tools-nightly/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-ci-tools-nightly/pipeline.svg
 
 
-+------------------+---------+-------------------------------+
-| Image            | Tag     | Build                         |
-+==================+=========+===============================+
-| `rust`_          | latest  | |rust-latest-build|           |
-+------------------+---------+-------------------------------+
-| `rust`_          | nightly | |rust-nightly-build|          |
-+------------------+---------+-------------------------------+
-| `rust-ci-tools`_ | nightly | |rust-ci-tools-nightly-build| |
-+------------------+---------+-------------------------------+
++------------------+------------------+-------------------------------+
+| Image            | Tag              | Build                         |
++==================+==================+===============================+
+| `rust`_          | latest           | |rust-latest-build|           |
++------------------+------------------+-------------------------------+
+| `rust`_          | latest-fearless  | |rust-latest-fearless-build|  |
++------------------+------------------+-------------------------------+
+| `rust`_          | nightly          | |rust-nightly-build|          |
++------------------+------------------+-------------------------------+
+| `rust`_          | nightly-fearless | |rust-nightly-fearless-build| |
++------------------+------------------+-------------------------------+
+| `rust-ci-tools`_ | nightly          | |rust-ci-tools-nightly-build| |
++------------------+------------------+-------------------------------+
 
 
 License

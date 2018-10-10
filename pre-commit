@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+if [ "${COMMIT_ON_MASTER}" != "1" -a "${COMMIT_ON_MASTER}" != "true" ] &&
+   test $(git rev-parse --abbrev-ref HEAD) = "master"; then
+  echo "Cannot commit on \`master\` branch"
+  exit 1
+fi

@@ -77,6 +77,18 @@ Docker images
 +------------------+------------------+-------------------------------+
 
 
+Development
+-----------
+
+Copy ``pre-commit`` script into ``.git/hooks/``.
+
+
+.. code:: zsh
+
+   : see pre-commit script
+   % ./pre-commit; echo $?
+   % COMMIT_ON_MASTER=1 ./pre-commit; echo $?
+
 License
 -------
 

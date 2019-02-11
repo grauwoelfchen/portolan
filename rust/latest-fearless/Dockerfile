@@ -27,6 +27,7 @@ RUN set -eux && \
     rustup component add rust-src && \
     \
     rustup --version && \
+    rustup show && \
     rustc --version && \
     cargo --version
 

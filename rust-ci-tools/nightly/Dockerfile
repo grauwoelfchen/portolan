@@ -10,8 +10,7 @@ RUN set -eux && \
     emerge -qv sys-libs/binutils-libs \
                dev-util/kcov && \
     \
-    rustup component add rustfmt-preview clippy-preview \
-      --toolchain nightly && \
+    rustup component add rustfmt clippy --toolchain nightly && \
     \
     rustup --version && \
     rustc --version && \

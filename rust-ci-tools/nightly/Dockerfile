@@ -1,6 +1,6 @@
 FROM grauwoelfchen/rust:nightly
 
-LABEL maintainer="Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>"
+LABEL maintainer="Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 
 RUN set -eux && \
     \
@@ -10,8 +10,7 @@ RUN set -eux && \
     emerge -qv sys-libs/binutils-libs \
                dev-util/kcov && \
     \
-    rustup component add rustfmt-preview clippy-preview \
-      --toolchain nightly && \
+    rustup component add rustfmt clippy --toolchain nightly && \
     \
     rustup --version && \
     rustc --version && \

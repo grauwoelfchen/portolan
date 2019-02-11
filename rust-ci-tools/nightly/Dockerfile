@@ -1,6 +1,6 @@
 FROM grauwoelfchen/rust:nightly
 
-LABEL maintainer="Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>"
+LABEL maintainer="Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 
 RUN set -eux && \
     \

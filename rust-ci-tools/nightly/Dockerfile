@@ -7,18 +7,20 @@ RUN set -eux && \
     accept_keywords=/etc/portage/package.accept_keywords && \
     mkdir -p $accept_keywords && \
     echo "dev-util/kcov ~amd64" >> $accept_keywords/kcov && \
-    emerge -qv sys-libs/binutils-libs \
-               dev-util/kcov && \
+    emerge -qv dev-util/kcov \
+               sys-libs/binutils-libs && \
     \
-    rustup component add rustfmt clippy --toolchain nightly && \
+    rustup self update && \
+    rustup component add clippy rustfmt --toolchain nightly && \
     \
     rustup --version && \
+    rustup show && \
     rustc --version && \
     cargo --version && \
     \
     kcov --version && \
+    cargo clippy --version && \
     cargo fmt --version && \
-    cargo clippy --version
 
 WORKDIR /
 CMD ["/bin/bash"]

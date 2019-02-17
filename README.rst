@@ -40,7 +40,9 @@ Docker images
 
 * `rust-vet-tools`_
 
-  * ``rust-vet-tools:nightly`` ... rustfmt, clippy and kcov
+  * ``rust-vet-tools:stable`` ... stable rust with rustfmt, clippy and kcov
+
+  * ``rust-vet-tools:nightly`` ... nightly rust with rustfmt, clippy and kcov
 
 .. _rust: https://hub.docker.com/r/grauwoelfchen/rust/
 .. _rust-vet-tools: https://hub.docker.com/r/grauwoelfchen/rust-vet-tools/

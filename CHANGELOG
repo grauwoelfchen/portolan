@@ -1,3 +1,7 @@
+Mon 18 Feb 2019 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add stable tag for rust-ci-tools
+	* Rename latest as stable
+
 Mon 02 Sep 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Separate branches (by images and tags)
 

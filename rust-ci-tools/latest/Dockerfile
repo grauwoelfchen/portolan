@@ -1,4 +1,4 @@
-FROM grauwoelfchen/rust:nightly
+FROM grauwoelfchen/rust:latest
 
 LABEL maintainer="Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 
@@ -11,7 +11,7 @@ RUN set -eux && \
                sys-libs/binutils-libs && \
     \
     rustup self update && \
-    rustup component add clippy rustfmt --toolchain nightly && \
+    rustup component add clippy rustfmt --toolchain latest && \
     \
     rustup --version && \
     rustup show && \

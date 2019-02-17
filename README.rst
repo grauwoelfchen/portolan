@@ -30,9 +30,9 @@ Docker images
 
 * `rust`_
 
-  * ``rust:latest`` ... latest rust and toolchains with source
+  * ``rust:stable`` ... stable rust and toolchains with source
 
-  * ``rust:latest-fearless`` ... + `emerge --sync`
+  * ``rust:stable-fearless`` ... + `emerge --sync`
 
   * ``rust:nightly`` ... nightly rust and toolchains with source
 
@@ -46,17 +46,20 @@ Docker images
 .. _rust: https://hub.docker.com/r/grauwoelfchen/rust/
 .. _rust-ci-tools: https://hub.docker.com/r/grauwoelfchen/rust-ci-tools/
 
-.. |rust-latest-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-latest/pipeline.svg
-   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-latest
+.. |rust-stable-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-stable/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-stable
 
-.. |rust-latest-fearless-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-latest-fearless/pipeline.svg
-   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-latest-fearless
+.. |rust-stable-fearless-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-stable-fearless/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-stable-fearless
 
 .. |rust-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly
 
 .. |rust-nightly-fearless-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly-fearless/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly-fearless
+
+.. |rust-ci-tools-stable-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-ci-tools-stable/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-ci-tools-stable/pipeline.svg
 
 .. |rust-ci-tools-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-ci-tools-nightly/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-ci-tools-nightly/pipeline.svg
@@ -65,13 +68,15 @@ Docker images
 +------------------+------------------+-------------------------------+
 | Image            | Tag              | Build                         |
 +==================+==================+===============================+
-| `rust`_          | latest           | |rust-latest-build|           |
+| `rust`_          | stable           | |rust-stable-build|           |
 +------------------+------------------+-------------------------------+
-| `rust`_          | latest-fearless  | |rust-latest-fearless-build|  |
+| `rust`_          | stable-fearless  | |rust-stable-fearless-build|  |
 +------------------+------------------+-------------------------------+
 | `rust`_          | nightly          | |rust-nightly-build|          |
 +------------------+------------------+-------------------------------+
 | `rust`_          | nightly-fearless | |rust-nightly-fearless-build| |
++------------------+------------------+-------------------------------+
+| `rust-ci-tools`_ | stable           | |rust-ci-tools-stable-build| |
 +------------------+------------------+-------------------------------+
 | `rust-ci-tools`_ | nightly          | |rust-ci-tools-nightly-build| |
 +------------------+------------------+-------------------------------+

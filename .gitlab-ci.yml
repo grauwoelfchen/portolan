@@ -1,12 +1,12 @@
 stages:
   - build
 
-build-rust-latest:
+build-rust-stable:
   stage: build
   image: docker:latest
   variables:
     CONTAINER_NAME: grauwoelfchen/rust
-    CONTAINER_TAG: latest
+    CONTAINER_TAG: stable
   services:
     - docker:dind
   before_script:
@@ -16,21 +16,21 @@ build-rust-latest:
   script:
     - cd rust
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      latest
+      stable
     - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
       $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
     - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
   after_script:
     - docker logout
   only:
-    - rust-latest
+    - rust-stable
 
-build-rust-latest-fearless:
+build-rust-stable-fearless:
   stage: build
   image: docker:latest
   variables:
     CONTAINER_NAME: grauwoelfchen/rust
-    CONTAINER_TAG: latest-fearless
+    CONTAINER_TAG: stable-fearless
   services:
     - docker:dind
   before_script:
@@ -40,14 +40,14 @@ build-rust-latest-fearless:
   script:
     - cd rust
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      latest-fearless
+      stable-fearless
     - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
       $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
     - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
   after_script:
     - docker logout
   only:
-    - rust-latest-fearless
+    - rust-stable-fearless
 
 build-rust-nightly:
   stage: build
@@ -97,11 +97,35 @@ build-rust-nightly-fearless:
   only:
     - rust-nightly-fearless
 
-build-rust-ci-tools-nightly:
+build-rust-vet-tools-stable:
   stage: build
   image: docker:latest
   variables:
-    CONTAINER_NAME: grauwoelfchen/rust-ci-tools
+    CONTAINER_NAME: grauwoelfchen/rust-vet-tools
+    CONTAINER_TAG: stable
+  services:
+    - docker:dind
+  before_script:
+    - docker version
+    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
+      --password-stdin $REGISTRY_HOSTNAME
+  script:
+    - cd rust-vet-tools
+    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      stable
+    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+  after_script:
+    - docker logout
+  only:
+    - rust-vet-tools-stable
+
+build-rust-vet-tools-nightly:
+  stage: build
+  image: docker:latest
+  variables:
+    CONTAINER_NAME: grauwoelfchen/rust-vet-tools
     CONTAINER_TAG: nightly
   services:
     - docker:dind
@@ -110,7 +134,7 @@ build-rust-ci-tools-nightly:
     - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
       --password-stdin $REGISTRY_HOSTNAME
   script:
-    - cd rust-ci-tools
+    - cd rust-vet-tools
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
       nightly
     - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
@@ -119,4 +143,4 @@ build-rust-ci-tools-nightly:
   after_script:
     - docker logout
   only:
-    - rust-ci-tools-nightly
+    - rust-vet-tools-nightly

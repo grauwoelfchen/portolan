@@ -76,7 +76,7 @@ Docker images
 +------------------+------------------+-------------------------------+
 | `rust`_          | nightly-fearless | |rust-nightly-fearless-build| |
 +------------------+------------------+-------------------------------+
-| `rust-ci-tools`_ | stable           | |rust-ci-tools-stable-build| |
+| `rust-ci-tools`_ | stable           | |rust-ci-tools-stable-build|  |
 +------------------+------------------+-------------------------------+
 | `rust-ci-tools`_ | nightly          | |rust-ci-tools-nightly-build| |
 +------------------+------------------+-------------------------------+

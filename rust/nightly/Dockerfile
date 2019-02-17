@@ -1,7 +1,7 @@
 FROM gentoo/portage:latest as portage
 FROM gentoo/stage3-amd64-nomultilib:latest
 
-LABEL maintainer="Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>"
+LABEL maintainer="Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 
 COPY --from=portage /usr/portage /usr/portage
 
@@ -22,11 +22,12 @@ RUN set -eux && \
     ./rustup-init -y --no-modify-path --default-toolchain nightly && \
     rm rustup-init && \
     chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
-    rustup component add rust-src && \
+    rustup component add rls rust-analysis rust-src && \
     \
     rustup --version && \
     rustc --version && \
-    cargo --version
+    cargo --version && \
+    rls --version
 
 WORKDIR /
 CMD ["/bin/bash"]

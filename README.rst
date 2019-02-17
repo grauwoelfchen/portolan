@@ -38,13 +38,14 @@ Docker images
 
   * ``rust:nightly-fearless`` ... + `emerge --sync`
 
-* `rust-ci-tools`_
+* `rust-vet-tools`_
 
-  * ``rust-ci-tools:nightly`` ... rustfmt-preview, clippy-preview and kcov
-    (nightly only)
+  * ``rust-vet-tools:stable`` ... stable rust with rustfmt, clippy and kcov
+
+  * ``rust-vet-tools:nightly`` ... nightly rust with rustfmt, clippy and kcov
 
 .. _rust: https://hub.docker.com/r/grauwoelfchen/rust/
-.. _rust-ci-tools: https://hub.docker.com/r/grauwoelfchen/rust-ci-tools/
+.. _rust-vet-tools: https://hub.docker.com/r/grauwoelfchen/rust-vet-tools/
 
 .. |rust-stable-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-stable/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-stable
@@ -58,28 +59,28 @@ Docker images
 .. |rust-nightly-fearless-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly-fearless/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly-fearless
 
-.. |rust-ci-tools-stable-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-ci-tools-stable/pipeline.svg
-   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-ci-tools-stable/pipeline.svg
+.. |rust-vet-tools-stable-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-vet-tools-stable/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-vet-tools-stable/pipeline.svg
 
-.. |rust-ci-tools-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-ci-tools-nightly/pipeline.svg
-   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-ci-tools-nightly/pipeline.svg
+.. |rust-vet-tools-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-vet-tools-nightly/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-vet-tools-nightly/pipeline.svg
 
 
-+------------------+------------------+-------------------------------+
-| Image            | Tag              | Build                         |
-+==================+==================+===============================+
-| `rust`_          | stable           | |rust-stable-build|           |
-+------------------+------------------+-------------------------------+
-| `rust`_          | stable-fearless  | |rust-stable-fearless-build|  |
-+------------------+------------------+-------------------------------+
-| `rust`_          | nightly          | |rust-nightly-build|          |
-+------------------+------------------+-------------------------------+
-| `rust`_          | nightly-fearless | |rust-nightly-fearless-build| |
-+------------------+------------------+-------------------------------+
-| `rust-ci-tools`_ | stable           | |rust-ci-tools-stable-build| |
-+------------------+------------------+-------------------------------+
-| `rust-ci-tools`_ | nightly          | |rust-ci-tools-nightly-build| |
-+------------------+------------------+-------------------------------+
++-------------------+------------------+--------------------------------+
+| Image             | Tag              | Build                          |
++===================+==================+================================+
+| `rust`_           | stable           | |rust-stable-build|            |
++-------------------+------------------+--------------------------------+
+| `rust`_           | stable-fearless  | |rust-stable-fearless-build|   |
++-------------------+------------------+--------------------------------+
+| `rust`_           | nightly          | |rust-nightly-build|           |
++-------------------+------------------+--------------------------------+
+| `rust`_           | nightly-fearless | |rust-nightly-fearless-build|  |
++-------------------+------------------+--------------------------------+
+| `rust-vet-tools`_ | stable           | |rust-vet-tools-stable-build|  |
++-------------------+------------------+--------------------------------+
+| `rust-vet-tools`_ | nightly          | |rust-vet-tools-nightly-build| |
++-------------------+------------------+--------------------------------+
 
 
 Development

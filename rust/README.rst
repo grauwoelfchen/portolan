@@ -22,12 +22,12 @@ Build
 .. code:: zsh
 
    # stable
-   % docker image build -t grauwoelfchen/rust:stable stable
-   % docker image build -t grauwoelfchen/rust:stable-fearless stable-fearless
+   % make build:stable
+   % make build:stable-fearless
 
    # nightly
-   % docker image build -t grauwoelfchen/rust:nightly nightly
-   % docker image build -t grauwoelfchen/rust:nightly-fearless nightly-fearless
+   % make build:nightly
+   % make build:nightly-fearless
 
 Run
 ---

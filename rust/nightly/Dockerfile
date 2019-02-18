@@ -22,12 +22,12 @@ RUN set -eux && \
     ./rustup-init -y --no-modify-path --default-toolchain nightly && \
     rm rustup-init && \
     chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
-    rustup component add rls rust-analysis rust-src && \
+    rustup component add rust-src && \
     \
     rustup --version && \
+    rustup show && \
     rustc --version && \
-    cargo --version && \
-    rls --version
+    cargo --version
 
 WORKDIR /
 CMD ["/bin/bash"]

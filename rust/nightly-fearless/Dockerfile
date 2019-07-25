@@ -3,7 +3,7 @@ FROM gentoo/stage3-amd64-nomultilib:latest
 
 LABEL maintainer="Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 
-COPY --from=portage /usr/portage /usr/portage
+COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \

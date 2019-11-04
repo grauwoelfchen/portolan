@@ -19,7 +19,7 @@ Base images
 -----------
 
 * `gentoo/portage`_
-* `gentoo/stage3-amd64`_ (nomultilib)
+* `gentoo/stage3-amd64`_ (and/or nomultilib)
 
 .. _gentoo/portage: https://hub.docker.com/r/gentoo/portage/
 .. _gentoo/stage3-amd64: https://hub.docker.com/r/gentoo/stage3-amd64/
@@ -27,6 +27,12 @@ Base images
 
 Docker images
 -------------
+
+* `gentoo`_
+
+  * ``gentoo:amd64`` ... busybox base gentoo's stage3 for amd64 and portage
+
+  * ``gentoo:amd64-nomultilib`` ... - `multilib` (amd64-nomultilib image)
 
 * `rust`_
 
@@ -44,8 +50,15 @@ Docker images
 
   * ``rust-vet-tools:nightly`` ... nightly rust with rustfmt, clippy and kcov
 
+.. _gentoo: https://hub.docker.com/r/grauwoelfchen/gentoo/
 .. _rust: https://hub.docker.com/r/grauwoelfchen/rust/
 .. _rust-vet-tools: https://hub.docker.com/r/grauwoelfchen/rust-vet-tools/
+
+.. |gentoo-amd64-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/gentoo-amd64/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/gentoo-amd64
+
+.. |gentoo-amd64-nomultilib-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/gentoo-amd64-nomultilib/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/gentoo-amd64-nomultilib
 
 .. |rust-stable-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-stable/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-stable
@@ -69,6 +82,10 @@ Docker images
 +-------------------+------------------+--------------------------------+
 | Image             | Tag              | Build                          |
 +===================+==================+================================+
+| `gentoo`_         | amd64            | |gentoo-amd64-build|           |
++-------------------+------------------+--------------------------------+
+| `gentoo`_         | amd64-nomultilib | |gentoo-amd64-nomultilib-build||
++-------------------+------------------+--------------------------------+
 | `rust`_           | stable           | |rust-stable-build|            |
 +-------------------+------------------+--------------------------------+
 | `rust`_           | stable-fearless  | |rust-stable-fearless-build|   |

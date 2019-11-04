@@ -1,6 +1,51 @@
 stages:
   - build
 
+before_script:
+  - docker version
+  - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
+    --password-stdin $REGISTRY_HOSTNAME
+
+build-gentoo-amd64:
+  stage: build
+  image: docker:latest
+  variables:
+    CONTAINER_NAME: grauwoelfchen/gentoo
+    CONTAINER_TAG: amd64
+  services:
+    - docker:dind
+  script:
+    - cd gentoo
+    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      amd64
+    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+  after_script:
+    - docker logout
+  only:
+    - gentoo-amd64
+
+build-gentoo-amd64-nomultilib:
+  stage: build
+  image: docker:latest
+  variables:
+    CONTAINER_NAME: grauwoelfchen/gentoo
+    CONTAINER_TAG: amd64-nomultilib
+  services:
+    - docker:dind
+  script:
+    - cd gentoo
+    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      amd64-nomultilib
+    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+  after_script:
+    - docker logout
+  only:
+    - gentoo-amd64-nomultilib
+
 build-rust-stable:
   stage: build
   image: docker:latest
@@ -9,10 +54,6 @@ build-rust-stable:
     CONTAINER_TAG: stable
   services:
     - docker:dind
-  before_script:
-    - docker version
-    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
-      --password-stdin $REGISTRY_HOSTNAME
   script:
     - cd rust
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
@@ -33,10 +74,6 @@ build-rust-stable-fearless:
     CONTAINER_TAG: stable-fearless
   services:
     - docker:dind
-  before_script:
-    - docker version
-    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
-      --password-stdin $REGISTRY_HOSTNAME
   script:
     - cd rust
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
@@ -57,10 +94,6 @@ build-rust-nightly:
     CONTAINER_TAG: nightly
   services:
     - docker:dind
-  before_script:
-    - docker version
-    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
-      --password-stdin $REGISTRY_HOSTNAME
   script:
     - cd rust
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
@@ -81,10 +114,6 @@ build-rust-nightly-fearless:
     CONTAINER_TAG: nightly-fearless
   services:
     - docker:dind
-  before_script:
-    - docker version
-    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
-      --password-stdin $REGISTRY_HOSTNAME
   script:
     - cd rust
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
@@ -105,10 +134,6 @@ build-rust-vet-tools-stable:
     CONTAINER_TAG: stable
   services:
     - docker:dind
-  before_script:
-    - docker version
-    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
-      --password-stdin $REGISTRY_HOSTNAME
   script:
     - cd rust-vet-tools
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
@@ -129,10 +154,6 @@ build-rust-vet-tools-nightly:
     CONTAINER_TAG: nightly
   services:
     - docker:dind
-  before_script:
-    - docker version
-    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
-      --password-stdin $REGISTRY_HOSTNAME
   script:
     - cd rust-vet-tools
     - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG

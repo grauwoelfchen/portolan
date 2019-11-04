@@ -20,7 +20,7 @@ RUN set -eux && \
     \
     kcov --version && \
     cargo clippy --version && \
-    cargo fmt --version && \
+    cargo fmt --version
 
 WORKDIR /
 CMD ["/bin/bash"]

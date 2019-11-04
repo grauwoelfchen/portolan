@@ -1,19 +1,18 @@
-FROM gentoo/portage:latest as portage
-FROM gentoo/stage3-amd64-nomultilib:latest
+FROM grauwoelfchen/gentoo-amd64-nomultilib:latest
 
 LABEL maintainer="Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"
-
-COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH
 
 WORKDIR /tmp
+
 RUN set -eux && \
     \
-    eselect news read --quiet new >/dev/null 2>&1 && \
-    emerge -qv net-misc/curl && \
+    emerge -qv net-misc/curl
+
+RUN set -eux && \
     \
     platform="x86_64-unknown-linux-gnu" && \
     url="https://static.rust-lang.org/rustup/dist/${platform}/rustup-init" && \

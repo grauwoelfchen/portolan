@@ -8,8 +8,6 @@ COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 WORKDIR /
 RUN set -eux; \
     \
-    emerge --sync; \
-    \
     eselect news read --quiet new >/dev/null 2>&1; \
     emerge --info
 

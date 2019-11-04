@@ -1,14 +1,17 @@
-Mon 18 Feb 2019 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+Sun 04 Nov 2019 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add gentoo-amd64 and gentoo-amd64-nomultilib
+
+Mon 18 Feb 2019 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Add stable tag for rust-ci-tools
 	* Rename latest as stable
 
-Mon 02 Sep 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+Mon 02 Sep 2018 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Separate branches (by images and tags)
 
-Wed 11 Apr 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+Wed 11 Apr 2018 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Create rust-ci-tools:nightly
 
-Sat 07 Apr 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+Sat 07 Apr 2018 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Add build jobs on CI (gitlab-ci)
 	* Add LICENSE file
 	* Add rust (latest, nightly)

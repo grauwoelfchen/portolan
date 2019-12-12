@@ -28,30 +28,34 @@ Base images
 Docker images
 -------------
 
-* `gentoo`_
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| Name                       | Description                                          | Tags             | Build                           |
++============================+======================================================+==================+=================================+
+| `gentoo-amd64`_            | busybox base gentoo's stage3 for amd64 and portage   | latest           | |gentoo-amd64-build|            |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| `gentoo-amd64-nomultilib`_ | ``nomultilib`` version (amd64-nomultilib)            | latest           | |gentoo-amd64-nomultilib-build| |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| `rust`_                    | stable rust with source                              | stable           | |rust-stable-build|             |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| `rust`_                    | stable + latest portage with ``emerge --sync`` ;-)   | stable-fearless  | |rust-stable-fearless-build|    |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| `rust`_                    | nightly rust with source                             | nightly          | |rust-nightly-build|            |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| `rust`_                    | nightly + latest portage with ``emerge --sync``` ;-) | nightly-fearless | |rust-nightly-fearless-build|   |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| `rust-vet-tools`_          | stable rust with rustfmt, clippy and kcov            | stable           | |rust-vet-tools-stable-build|   |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| `rust-vet-tools`_          | nightly rust with rustfmt, clippy and kcov           | nightly          | |rust-vet-tools-nightly-build|  |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| `rust-dev-tools`_          | TODO                                                 | stable           |                                 |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
+| `rust-dev-tools`_          | TODO                                                 | nightly          |                                 |
++----------------------------+------------------------------------------------------+------------------+---------------------------------+
 
-  * ``gentoo:amd64`` ... busybox base gentoo's stage3 for amd64 and portage
-
-  * ``gentoo:amd64-nomultilib`` ... - `multilib` (amd64-nomultilib image)
-
-* `rust`_
-
-  * ``rust:stable`` ... stable rust and toolchains with source
-
-  * ``rust:stable-fearless`` ... + `emerge --sync`
-
-  * ``rust:nightly`` ... nightly rust and toolchains with source
-
-  * ``rust:nightly-fearless`` ... + `emerge --sync`
-
-* `rust-vet-tools`_
-
-  * ``rust-vet-tools:stable`` ... stable rust with rustfmt, clippy and kcov
-
-  * ``rust-vet-tools:nightly`` ... nightly rust with rustfmt, clippy and kcov
-
-.. _gentoo: https://hub.docker.com/r/grauwoelfchen/gentoo/
+.. _gentoo-amd64: https://hub.docker.com/r/grauwoelfchen/gentoo-amd64/
+.. _gentoo-amd64-nomultilib: https://hub.docker.com/r/grauwoelfchen/gentoo-amd64-nomultilib/
 .. _rust: https://hub.docker.com/r/grauwoelfchen/rust/
+.. _rust-dev-tools: https://hub.docker.com/r/grauwoelfchen/rust-dev-tools/
 .. _rust-vet-tools: https://hub.docker.com/r/grauwoelfchen/rust-vet-tools/
 
 .. |gentoo-amd64-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/gentoo-amd64/pipeline.svg
@@ -79,25 +83,15 @@ Docker images
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-vet-tools-nightly/pipeline.svg
 
 
-+-------------------+------------------+--------------------------------+
-| Image             | Tag              | Build                          |
-+===================+==================+================================+
-| `gentoo`_         | amd64            | |gentoo-amd64-build|           |
-+-------------------+------------------+--------------------------------+
-| `gentoo`_         | amd64-nomultilib | |gentoo-amd64-nomultilib-build||
-+-------------------+------------------+--------------------------------+
-| `rust`_           | stable           | |rust-stable-build|            |
-+-------------------+------------------+--------------------------------+
-| `rust`_           | stable-fearless  | |rust-stable-fearless-build|   |
-+-------------------+------------------+--------------------------------+
-| `rust`_           | nightly          | |rust-nightly-build|           |
-+-------------------+------------------+--------------------------------+
-| `rust`_           | nightly-fearless | |rust-nightly-fearless-build|  |
-+-------------------+------------------+--------------------------------+
-| `rust-vet-tools`_ | stable           | |rust-vet-tools-stable-build|  |
-+-------------------+------------------+--------------------------------+
-| `rust-vet-tools`_ | nightly          | |rust-vet-tools-nightly-build| |
-+-------------------+------------------+--------------------------------+
+
+
+TODO
+****
+
+* Create rust-dev-tools
+* Add tag using date for gentoo images (like 20191210)
+* Add tag using version and base image's tag for rust images (like 1.39.0-stable-20191210, 1.41.0-nightly-20191211)
+* Use build arg (Remove unnecesary Dockerfile and subdirectory)
 
 
 Development

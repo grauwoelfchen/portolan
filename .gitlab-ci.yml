@@ -1,50 +1,83 @@
 stages:
   - build
+  - deploy
 
-before_script:
-  - docker version
-  - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
+.docker_login:
+  - &docker_login
+    echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
     --password-stdin $REGISTRY_HOSTNAME
+
+.build_gentoo: &build_gentoo
+  - cd gentoo
+  - export TAG=$(date +%Y%m%d)
+  - make build:${TARGET}:${TAG}
+  - docker tag $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
+    $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
 
 build-gentoo-amd64:
   stage: build
   image: docker:latest
   variables:
-    CONTAINER_NAME: grauwoelfchen/gentoo
-    CONTAINER_TAG: amd64
+    TARGET: amd64
   services:
     - docker:dind
   script:
-    - cd gentoo
-    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      amd64
-    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-  after_script:
-    - docker logout
+    <<: *build_gentoo
   only:
-    - gentoo-amd64
+    - master
 
 build-gentoo-amd64-nomultilib:
   stage: build
   image: docker:latest
   variables:
-    CONTAINER_NAME: grauwoelfchen/gentoo
-    CONTAINER_TAG: amd64-nomultilib
+    TARGET: amd64-nomultilib
   services:
     - docker:dind
   script:
-    - cd gentoo
-    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      amd64-nomultilib
-    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    <<: *build_gentoo
+  only:
+    - master
+
+deploy-gentoo-amd64:
+  stage: deploy
+  image: docker:latest
+  variables:
+    TARGET: amd64
+  services:
+    - docker:dind
+  before_script:
+    - docker version
+    - *docker_login
+  script:
+    <<: *build_gentoo
+    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
   after_script:
     - docker logout
   only:
-    - gentoo-amd64-nomultilib
+    - /^gentoo-amd64-.*/
+  except:
+    - branches
+    - /^gentoo-amd64-nomultilib-.*/
+
+deploy-gentoo-amd64-nomultilib:
+  stage: deploy
+  image: docker:latest
+  variables:
+    TARGET: amd64-nomultilib
+  services:
+    - docker:dind
+  before_script:
+    - docker version
+    - *docker_login
+  script:
+    <<: *build_gentoo
+    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
+  after_script:
+    - docker logout
+  only:
+    - /^gentoo-amd64-nomultilib-.*/
+  except:
+    - branches
 
 build-rust-stable:
   stage: build

@@ -3,7 +3,7 @@ _build-%:
 	echo $${tag}; \
 	docker image build . \
 		-t grauwoelfchen/gentoo-$(NAME):$${tag} \
-		--build-arg STAGE_TYPE=stage3-$(NAME)
+		--build-arg STAGE=stage3-$(NAME)
 
 build\:amd64\:%:
 	@tag="$(subst build:amd64:,,$@)"; \
@@ -17,7 +17,7 @@ build\:amd64:
 .PHONY: build\:amd64
 
 build\:amd64-nomultilib\:%:
-	@tag="$(subst build:amd64:,,$@)"; \
+	@tag="$(subst build:amd64-nomultilib:,,$@)"; \
 	$(MAKE_COMMAND) -s NAME=amd64-nomultilib -f $(firstword $(MAKEFILE_LIST)) \
 		_build-$${tag}
 .PHONY: build\:amd64-nomultilib\:%

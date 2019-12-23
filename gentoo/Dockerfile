@@ -1,8 +1,6 @@
-ARG STAGE_TYPE
-ENV STAGE_TYPE $STAGE_TYPE
-
+ARG STAGE
 FROM gentoo/portage:latest as portage
-FROM gentoo/${STAGE_TYPE}:latest
+FROM gentoo/${STAGE}:latest
 
 LABEL maintainer="Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 

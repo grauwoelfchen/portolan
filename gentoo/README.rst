@@ -6,8 +6,8 @@ These images are built with stage3 for amd64.
 ``amd64-nomultilib`` is an image using nomultilib as base.
 
 
-Stage3 types
--------------
+Types
+-----
 
 * amd64
 * amd64-nomultilib

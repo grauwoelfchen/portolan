@@ -16,7 +16,7 @@ stages:
   - cd gentoo
   - export TAG=$(date +%Y%m%d)
   - make build:${TARGET}:${TAG}
-  - docker tag $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
+  - docker tag grauwoelfchen/gentoo-${TARGET}:$TAG
     $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
 
 .install_make: &install_make

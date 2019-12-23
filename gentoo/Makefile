@@ -2,7 +2,7 @@ _build-%:
 	tag="$(subst _build-,,$@)" ; \
 	echo $${tag}; \
 	docker image build . \
-		--t grauwoelfchen/gentoo-$(NAME):$${tag} \
+		-t grauwoelfchen/gentoo-$(NAME):$${tag} \
 		--build-arg STAGE_TYPE=stage3-$(NAME)
 
 build\:amd64\:%:

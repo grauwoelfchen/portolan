@@ -7,10 +7,20 @@ stages:
 # * share artifacts between stages
 # * use gitlab image registry
 
+.docker: &docker
+  image: docker:latest
+  services:
+    - docker:dind
+
 .docker_login:
   - &docker_login
     echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
     --password-stdin $REGISTRY_HOSTNAME
+
+.install_make: &install_make
+  - apk add --no-cache make
+
+# gentoo
 
 .build_gentoo: &build_gentoo
   - cd gentoo
@@ -19,16 +29,11 @@ stages:
   - docker tag grauwoelfchen/gentoo-${TARGET}:$TAG
     $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
 
-.install_make: &install_make
-  - apk add --no-cache make
-
 build-gentoo-amd64:
+  <<: *docker
   stage: build
-  image: docker:latest
   variables:
     TARGET: amd64
-  services:
-    - docker:dind
   before_script:
     - *install_make
   script:
@@ -37,12 +42,10 @@ build-gentoo-amd64:
     - master
 
 build-gentoo-amd64-nomultilib:
+  <<: *docker
   stage: build
-  image: docker:latest
   variables:
     TARGET: amd64-nomultilib
-  services:
-    - docker:dind
   before_script:
     - *install_make
   script:
@@ -51,12 +54,10 @@ build-gentoo-amd64-nomultilib:
     - master
 
 deploy-gentoo-amd64:
+  <<: *docker
   stage: deploy
-  image: docker:latest
   variables:
     TARGET: amd64
-  services:
-    - docker:dind
   before_script:
     - *install_make
     - docker version
@@ -73,12 +74,10 @@ deploy-gentoo-amd64:
     - /^gentoo-amd64-nomultilib-.*/
 
 deploy-gentoo-amd64-nomultilib:
+  <<: *docker
   stage: deploy
-  image: docker:latest
   variables:
     TARGET: amd64-nomultilib
-  services:
-    - docker:dind
   before_script:
     - *install_make
     - docker version
@@ -93,85 +92,152 @@ deploy-gentoo-amd64-nomultilib:
   except:
     - branches
 
+# rust
+
+.build_rust_latest: &build_rust_latest
+  - cd rust
+  - make rust:${TARGET}
+  - docker tag grauwoelfchen/rust:${TARGET}
+    $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
+
+.build_rust_version: &build_rust_version
+  - cd rust
+  - make rust:${TARGET}
+  - VERSION=$(docker container run -it --rm grauwoelfchen/rust:stable rustc -V)
+  - docker tag grauwoelfchen/rust:${TARGET}
+    grauwoelfchen/rust:${VERSION}-${TARGET}
+  - docker tag grauwoelfchen/rust:${VERSION}-${TARGET}
+    $REGISTRY_HOSTNAME/grauwoelfchen/rust:${VERSION}-${TARGET}
+
 build-rust-stable:
+  <<: *docker
   stage: build
-  image: docker:latest
   variables:
-    CONTAINER_NAME: grauwoelfchen/rust
-    CONTAINER_TAG: stable
-  services:
-    - docker:dind
+    TARGET: stable
+  before_script:
+    - *install_make
   script:
-    - cd rust
-    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      stable
-    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - *build_rust_latest
+  only:
+    - master
+
+deploy-rust-stable:
+  <<: *docker
+  stage: deploy
+  variables:
+    TARGET: stable
+  before_script:
+    - *install_make
+    - docker version
+    - *docker_login
+  script:
+    - *build_rust_latest
+    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
   after_script:
     - docker logout
   only:
-    - rust-stable
+    - /^rust-stable-.*/
+  except:
+    - branches
+    - /^rust-stable-fearless-.*/
 
 build-rust-stable-fearless:
+  <<: *docker
   stage: build
-  image: docker:latest
   variables:
-    CONTAINER_NAME: grauwoelfchen/rust
-    CONTAINER_TAG: stable-fearless
-  services:
-    - docker:dind
+    TARGET: stable-fearless
+  before_script:
+    - *install_make
+    - docker version
+    - *docker_login
   script:
-    - cd rust
-    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      stable-fearless
-    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - *build_rust_latest
+  only:
+    - master
+
+deploy-rust-stable-fearless:
+  <<: *docker
+  stage: deploy
+  variables:
+    TARGET: stable-fearless
+  before_script:
+    - *install_make
+    - docker version
+    - *docker_login
+  script:
+    - *build_rust_latest
+    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
   after_script:
     - docker logout
   only:
-    - rust-stable-fearless
+    - /^rust-stable-fearless-.*/
+  except:
+    - branches
 
 build-rust-nightly:
+  <<: *docker
   stage: build
-  image: docker:latest
   variables:
-    CONTAINER_NAME: grauwoelfchen/rust
-    CONTAINER_TAG: nightly
-  services:
-    - docker:dind
+    TARGET: nightly
+  before_script:
+    - *install_make
   script:
-    - cd rust
-    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      nightly
-    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - *build_rust_latest
+  only:
+    - master
+
+deploy-rust-nightly:
+  <<: *docker
+  stage: deploy
+  variables:
+    TARGET: nightly
+  before_script:
+    - *install_make
+    - docker version
+    - *docker_login
+  script:
+    - *build_rust_latest
+    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
   after_script:
     - docker logout
   only:
-    - rust-nightly
+    - /^rust-nightly-.*/
+  except:
+    - branches
+    - /^rust-nightly-fearless-.*/
 
 build-rust-nightly-fearless:
+  <<: *docker
   stage: build
-  image: docker:latest
   variables:
-    CONTAINER_NAME: grauwoelfchen/rust
-    CONTAINER_TAG: nightly-fearless
-  services:
-    - docker:dind
+    TARGET: nightly-fearless
+  before_script:
+    - *install_make
   script:
-    - cd rust
-    - docker build -t $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      nightly-fearless
-    - docker tag $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-      $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
-    - docker push $REGISTRY_HOSTNAME/$CONTAINER_NAME:$CONTAINER_TAG
+    - *build_rust_latest
+  only:
+    - master
+
+deploy-rust-nightly-fearless:
+  <<: *docker
+  stage: deploy
+  variables:
+    TARGET: nightly-fearless
+  before_script:
+    - *install_make
+    - docker version
+    - *docker_login
+  script:
+    - *build_rust_latest
+    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
   after_script:
     - docker logout
   only:
-    - rust-nightly-fearless
+    - /^rust-nightly-fearless-.*/
+  except:
+    - branches
+
+# rust-vet-tools
 
 build-rust-vet-tools-stable:
   stage: build
@@ -212,3 +278,5 @@ build-rust-vet-tools-nightly:
     - docker logout
   only:
     - rust-vet-tools-nightly
+
+# rust-dev-tools

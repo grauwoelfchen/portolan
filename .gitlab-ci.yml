@@ -29,11 +29,11 @@ stages:
 .deploy_gentoo: &deploy_gentoo
   - *registry_login
   # date
-  - docker tag ${NAMESPACE}/gentoo-${TARGET}:$TAG
-    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}-${TARGET}:$TAG
-  - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}-${TARGET}:$TAG
+  - docker tag ${NAMESPACE}/gentoo-${TARGET}:${TAG}
+    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}-${TARGET}:${TAG}
+  - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}-${TARGET}:${TAG}
   # latest
-  - docker tag ${NAMESPACE}/gentoo-${TARGET}:$TAG
+  - docker tag ${NAMESPACE}/gentoo-${TARGET}:${TAG}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}-${TARGET}:latest
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}-${TARGET}:latest
   - docker logout
@@ -162,15 +162,24 @@ deploy-gentoo-amd64-nomultilib-gitlab:
 
 .build_rust: &build_rust
   - cd rust
-  - make build:${TARGET}
+  - make build:${TARGET}:${TAG}
 
 .deploy_rust: &deploy_rust
   - *registry_login
-  - docker tag ${NAMESPACE}/rust:${TARGET}
-    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TAG}
-  - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TAG}
+  # date (e.g. nightly-2020-01-02)
+  - docker tag ${NAMESPACE}/rust:${TARGET}:${TAG}
+    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}:${TAG}
+  - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}:${TAG}
+  # version (e.g. 1.40.0-stable, 1.42.0-nightly etc.)
+  - export VERSION=$(
+      docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc --version |
+      awk '{sub(/-.*/, "", $2); print $2}'
+    )-${TARGET}
+  - docker tag ${NAMESPACE}/rust:${VERSION}:${TAG}
+    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
+  - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   # default (no latest)
-  - docker tag ${NAMESPACE}/rust:${TARGET}
+  - docker tag ${NAMESPACE}/rust:${TARGET}:${TAG}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker logout
@@ -185,6 +194,7 @@ build-rust-stable:
   before_script:
     - *install_make
   script:
+    - export TAG=latest
     - *build_rust
   only:
     - rust-stable
@@ -204,11 +214,8 @@ deploy-rust-stable-docker_hub:
   before_script:
     - *install_make
   script:
+    - export TAG=$(date +%Y-%m-%d)
     - *build_rust
-    # version (e.g. 1.40.0-stable)
-    - export TAG=$(
-        docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc -V
-      )-${TARGET}
     - *deploy_rust
   only:
     - rust-stable
@@ -229,11 +236,8 @@ deploy-rust-stable-gitlab:
   before_script:
     - *install_make
   script:
+    - export TAG=$(date +%Y-%m-%d)
     - *build_rust
-    # version (e.g. 1.40.0-stable)
-    - export TAG=$(
-        docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc -V
-      )-${TARGET}
     - *deploy_rust
   only:
     - rust-stable
@@ -250,6 +254,7 @@ build-rust-stable-fearless:
   before_script:
     - *install_make
   script:
+    - export TAG=latest
     - *build_rust
   only:
     - rust-stable
@@ -269,11 +274,8 @@ deploy-rust-stable-fearless-docker_hub:
   before_script:
     - *install_make
   script:
+    - export TAG=$(date +%Y-%m-%d)
     - *build_rust
-    # version (e.g. 1.40.0-stable-fearless)
-    - export TAG=$(
-        docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc -V
-      )-${TARGET}
     - *deploy_rust
   only:
     - rust-stable
@@ -294,11 +296,8 @@ deploy-rust-stable-fearless-gitlab:
   before_script:
     - *install_make
   script:
+    - export TAG=$(date +%Y-%m-%d)
     - *build_rust
-    # version (e.g. 1.40.0-stable-fearless)
-    - export TAG=$(
-        docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc -V
-      )-${TARGET}
     - *deploy_rust
   only:
     - rust-stable
@@ -315,6 +314,7 @@ build-rust-nightly:
   before_script:
     - *install_make
   script:
+    - export TAG=latest
     - *build_rust
   only:
     - rust-nightly
@@ -334,9 +334,8 @@ deploy-rust-nightly-docker_hub:
   before_script:
     - *install_make
   script:
+    - export TAG=$(date +%Y-%m-%d)
     - *build_rust
-    # date (e.g. nightly-2020-01-02)
-    - export TAG=${TARGET}-$(date +%Y-%m-%d)
     - *deploy_rust
   only:
     - rust-nightly
@@ -357,9 +356,8 @@ deploy-rust-nightly-gitlab:
   before_script:
     - *install_make
   script:
+    - export TAG=$(date +%Y-%m-%d)
     - *build_rust
-    # date (e.g. nightly-2020-01-02)
-    - export TAG=${TARGET}-$(date +%Y-%m-%d)
     - *deploy_rust
   only:
     - rust-nightly
@@ -376,6 +374,7 @@ build-rust-nightly-fearless:
   before_script:
     - *install_make
   script:
+    - export TAG=latest
     - *build_rust
   only:
     - rust-nightly
@@ -393,9 +392,8 @@ deploy-rust-nightly-fearless-docker_hub:
   before_script:
     - *install_make
   script:
+    - export TAG=$(date +%Y-%m-%d)
     - *build_rust
-    # date (e.g. nightly-fearless-2020-01-02)
-    - export TAG=${TARGET}-$(date +%Y-%m-%d)
     - *deploy_rust
   only:
     - rust-nightly
@@ -414,9 +412,8 @@ deploy-rust-nightly-fearless-gitlab:
   before_script:
     - *install_make
   script:
+    - export TAG=$(date +%Y-%m-%d)
     - *build_rust
-    # date (e.g. nightly-fearless-2020-01-02)
-    - export TAG=${TARGET}-$(date +%Y-%m-%d)
     - *deploy_rust
   only:
     - rust-nightly

@@ -167,7 +167,7 @@ deploy-gentoo-amd64-nomultilib-gitlab:
 .deploy_rust: &deploy_rust
   - *registry_login
   # date (e.g. nightly-2020-01-02)
-  - docker tag ${NAMESPACE}/rust:${TARGET}:${TAG}
+  - docker tag ${NAMESPACE}/rust:${TARGET}-${TAG}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}:${TAG}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}:${TAG}
   # version (e.g. 1.40.0-stable, 1.42.0-nightly etc.)
@@ -175,11 +175,11 @@ deploy-gentoo-amd64-nomultilib-gitlab:
       docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc --version |
       awk '{sub(/-.*/, "", $2); print $2}'
     )-${TARGET}
-  - docker tag ${NAMESPACE}/rust:${VERSION}:${TAG}
+  - docker tag ${NAMESPACE}/rust:${TARGET}-${TAG}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   # default (no latest)
-  - docker tag ${NAMESPACE}/rust:${TARGET}:${TAG}
+  - docker tag ${NAMESPACE}/rust:${TARGET}-${TAG}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker logout

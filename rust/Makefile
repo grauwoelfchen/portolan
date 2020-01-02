@@ -10,6 +10,9 @@ _build-stable-%:
 		--build-arg ARCH=amd64-nomultilib \
 		--build-arg VERSION=$(VERSION)
 
+build\:stable\:latest: build\:stable
+.PHONY: build\:stable\:latest
+
 build\:stable\:%:
 	@version="$(subst build:stable:,,$@)"; \
 	$(MAKE_COMMAND) \
@@ -22,6 +25,9 @@ build\:stable:
 		-s DOCKERFILE=Dockerfile VERSION=stable \
 		-f $(firstword $(MAKEFILE_LIST)) _build-stable-stable
 .PHONY: build\:stable
+
+build\:stable-fearless\:latest: build\:stable-fearless
+.PHONY: build\:stable-fearless\:latest
 
 build\:stable-fearless:
 	@$(MAKE_COMMAND) \
@@ -39,6 +45,9 @@ _build-nightly-%:
 		--build-arg ARCH=amd64-nomultilib \
 		--build-arg VERSION=$(VERSION)
 
+build\:nightly\:latest: build\:nightly
+.PHONY: build\:nightly\:latest
+
 build\:nightly\:%:
 	@version="$(subst build:nightly:,,$@)"; \
 	$(MAKE_COMMAND) \
@@ -50,7 +59,10 @@ build\:nightly:
 	@$(MAKE_COMMAND) \
 		-s DOCKERFILE=Dockerfile VERSION=nightly \
 		-f $(firstword $(MAKEFILE_LIST)) _build-nightly-nightly
-.PHONY: build\:stable
+.PHONY: build\:nightly
+
+build\:nightly-fearless\:latest: build\:nightly-fearless
+.PHONY: build\:nightly-fearless\:latest
 
 build\:nightly-fearless:
 	@$(MAKE_COMMAND) \

@@ -1,10 +1,12 @@
+NAMESPACE ?= $(USER)
+
 # build:stable:1.40.0
 _build-stable-%:
 	tag="$(subst _build-stable-,,$@)" ; \
-	echo $${tag}; \
+	echo $(NAMESPACE)/rust:$${tag}; \
 	docker image build . \
 	  --file $(DOCKERFILE) \
-		--tag grauwoelfchen/rust:$${tag} \
+		--tag $(NAMESPACE)/rust:$${tag} \
 		--build-arg ARCH=amd64-nomultilib \
 		--build-arg VERSION=$(VERSION)
 
@@ -33,7 +35,7 @@ _build-nightly-%:
 	echo $${tag}; \
 	docker image build . \
 	  --file $(DOCKERFILE) \
-		--tag grauwoelfchen/rust:$${tag} \
+		--tag $(NAMESPACE)/rust:$${tag} \
 		--build-arg ARCH=amd64-nomultilib \
 		--build-arg VERSION=$(VERSION)
 

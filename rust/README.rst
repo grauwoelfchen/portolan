@@ -23,6 +23,8 @@ Build
 
 .. code:: zsh
 
+   % export NAMESPACE=grauwoelfchen
+
    # latest
    % make build:stable
    % make build:stable-fearless
@@ -42,10 +44,10 @@ Run
 
 .. code:: zsh
 
-   % docker container run -it --rm grauwoelfchen/rust:stable rustc -V
-   % docker container run -it --rm grauwoelfchen/rust:stable-fearless rustc -V
-   % docker container run -it --rm grauwoelfchen/rust:1.39.0-stable rustc -V
+   % docker container run -it --rm <NAMESPACE>/rust:stable rustc -V
+   % docker container run -it --rm <NAMESPACE>/rust:stable-fearless rustc -V
+   % docker container run -it --rm <NAMESPACE>/rust:1.39.0-stable rustc -V
 
-   % docker container run -it --rm grauwoelfchen/rust:nightly rustc -V
-   % docker container run -it --rm grauwoelfchen/rust:nightly-fearless rustc -V
-   % docker container run -it --rm grauwoelfchen/rust:nightly-2019-12-23 rustc -V
+   % docker container run -it --rm <NAMESPACE>/rust:nightly rustc -V
+   % docker container run -it --rm <NAMESPACE>/rust:nightly-fearless rustc -V
+   % docker container run -it --rm <NAMESPACE>/rust:nightly-2019-12-23 rustc -V

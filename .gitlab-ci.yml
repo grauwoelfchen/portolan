@@ -12,10 +12,11 @@ stages:
   services:
     - docker:dind
 
-.docker_login:
-  - &docker_login
-    echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USERNAME
-    --password-stdin $REGISTRY_HOSTNAME
+.registry_login:
+  - &registry_login
+    echo "$REGISTRY_PASSWORD"
+    | docker login --username $REGISTRY_USERNAME
+      --password-stdin $REGISTRY_HOSTNAME
 
 .install_make: &install_make
   - apk add --no-cache make
@@ -24,10 +25,19 @@ stages:
 
 .build_gentoo: &build_gentoo
   - cd gentoo
-  - export TAG=$(date +%Y%m%d)
   - make build:${TARGET}:${TAG}
+
+.deploy_gentoo: &deploy_gentoo
+  # date
   - docker tag grauwoelfchen/gentoo-${TARGET}:$TAG
     $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
+  - docker push $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
+  # latest
+  - docker tag grauwoelfchen/gentoo-${TARGET}:$TAG
+    $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:latest
+  - docker push $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:latest
+
+## gentoo-amd64
 
 build-gentoo-amd64:
   <<: *docker
@@ -37,9 +47,63 @@ build-gentoo-amd64:
   before_script:
     - *install_make
   script:
+    - export TAG=latest
     - *build_gentoo
   only:
+    - gentoo-amd64
     - master
+
+deploy-gentoo-amd64-dockerhub:
+  <<: *docker
+  stage: deploy
+  variables:
+    TARGET: amd64
+    REGISTRY_HOSTNAME: $REGISTRY_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_PASSWORD
+  dependencies:
+    - build-gentoo-amd64
+  before_script:
+    - *install_make
+    - docker version
+    - *registry_login
+  script:
+    - export TAG=$(date +%Y%m%d)
+    - *build_gentoo
+    - *deploy_gentoo
+  after_script:
+    - docker logout
+  only:
+    - gentoo-amd64
+  except:
+    - tags
+
+deploy-gentoo-amd64-gitlab:
+  <<: *docker
+  stage: deploy
+  variables:
+    TARGET: amd64
+    REGISTRY_HOSTNAME: $REGISTRY_GITLAB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_GITLAB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_GITLAB_PASSWORD
+  dependencies:
+    - build-gentoo-amd64
+  before_script:
+    - *install_make
+    - docker version
+    - *registry_login
+  script:
+    - export TAG=$(date +%Y%m%d)
+    - *build_gentoo
+    - *deploy_gentoo
+  after_script:
+    - docker logout
+  only:
+    - gentoo-amd64
+  except:
+    - tags
+
+## gentoo-amd64-nomultilib
 
 build-gentoo-amd64-nomultilib:
   <<: *docker
@@ -49,56 +113,67 @@ build-gentoo-amd64-nomultilib:
   before_script:
     - *install_make
   script:
+    - export TAG=latest
     - *build_gentoo
   only:
+    - gentoo-amd64-nomultilib
     - master
 
-deploy-gentoo-amd64:
-  <<: *docker
-  stage: deploy
-  variables:
-    TARGET: amd64
-  before_script:
-    - *install_make
-    - docker version
-    - *docker_login
-  script:
-    - *build_gentoo
-    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
-  after_script:
-    - docker logout
-  only:
-    - /^gentoo-amd64-.*/
-  except:
-    - branches
-    - /^gentoo-amd64-nomultilib-.*/
-
-deploy-gentoo-amd64-nomultilib:
+deploy-gentoo-amd64-nomultilib-dockerhub:
   <<: *docker
   stage: deploy
   variables:
     TARGET: amd64-nomultilib
+    REGISTRY_HOSTNAME: $REGISTRY_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_PASSWORD
+  dependencies:
+    - build-gentoo-amd64-nomultilib
   before_script:
     - *install_make
     - docker version
-    - *docker_login
+    - *registry_login
   script:
+    - export TAG=$(date +%Y%m%d)
     - *build_gentoo
-    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
+    - *deploy_gentoo
   after_script:
     - docker logout
   only:
-    - /^gentoo-amd64-nomultilib-.*/
+    - gentoo-amd64-nomultilib
   except:
-    - branches
+    - tags
+
+deploy-gentoo-amd64-nomultilib-gitlab:
+  <<: *docker
+  stage: deploy
+  variables:
+    TARGET: amd64-nomultilib
+    REGISTRY_HOSTNAME: $REGISTRY_GITLAB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_GITLAB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_GITLAB_PASSWORD
+  dependencies:
+    - build-gentoo-amd64-nomultilib
+  before_script:
+    - *install_make
+    - docker version
+    - *registry_login
+  script:
+    - export TAG=$(date +%Y%m%d)
+    - *build_gentoo
+    - *deploy_gentoo
+  after_script:
+    - docker logout
+  only:
+    - gentoo-amd64-nomultilib
+  except:
+    - tags
 
 # rust
 
 .build_rust_latest: &build_rust_latest
   - cd rust
   - make build:${TARGET}
-  - docker tag grauwoelfchen/rust:${TARGET}
-    $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
 
 .build_rust_version: &build_rust_version
   - cd rust
@@ -108,6 +183,8 @@ deploy-gentoo-amd64-nomultilib:
     grauwoelfchen/rust:${VERSION}-${TARGET}
   - docker tag grauwoelfchen/rust:${VERSION}-${TARGET}
     $REGISTRY_HOSTNAME/grauwoelfchen/rust:${VERSION}-${TARGET}
+
+## rust-stable
 
 build-rust-stable:
   <<: *docker
@@ -129,9 +206,11 @@ deploy-rust-stable:
   before_script:
     - *install_make
     - docker version
-    - *docker_login
+    - *registry_login
   script:
     - *build_rust_latest
+    - docker tag grauwoelfchen/rust:${TARGET}
+      $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
     - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
   after_script:
     - docker logout
@@ -141,6 +220,8 @@ deploy-rust-stable:
     - branches
     - /^rust-stable-fearless-.*/
 
+## rust-stable-fearless
+
 build-rust-stable-fearless:
   <<: *docker
   stage: build
@@ -149,7 +230,7 @@ build-rust-stable-fearless:
   before_script:
     - *install_make
     - docker version
-    - *docker_login
+    - *registry_login
   script:
     - *build_rust_latest
   only:
@@ -163,7 +244,7 @@ deploy-rust-stable-fearless:
   before_script:
     - *install_make
     - docker version
-    - *docker_login
+    - *registry_login
   script:
     - *build_rust_latest
     - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
@@ -173,6 +254,8 @@ deploy-rust-stable-fearless:
     - /^rust-stable-fearless-.*/
   except:
     - branches
+
+## rust-nightly
 
 build-rust-nightly:
   <<: *docker
@@ -194,7 +277,7 @@ deploy-rust-nightly:
   before_script:
     - *install_make
     - docker version
-    - *docker_login
+    - *registry_login
   script:
     - *build_rust_latest
     - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
@@ -205,6 +288,8 @@ deploy-rust-nightly:
   except:
     - branches
     - /^rust-nightly-fearless-.*/
+
+## rust-nightly-fearless
 
 build-rust-nightly-fearless:
   <<: *docker
@@ -226,7 +311,7 @@ deploy-rust-nightly-fearless:
   before_script:
     - *install_make
     - docker version
-    - *docker_login
+    - *registry_login
   script:
     - *build_rust_latest
     - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}

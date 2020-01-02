@@ -5,7 +5,6 @@ stages:
 # TODO
 # * remove make
 # * share artifacts between stages
-# * use gitlab image registry
 
 .docker: &docker
   image: docker:latest
@@ -28,14 +27,16 @@ stages:
   - make build:${TARGET}:${TAG}
 
 .deploy_gentoo: &deploy_gentoo
+  - *registry_login
   # date
-  - docker tag grauwoelfchen/gentoo-${TARGET}:$TAG
-    $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
-  - docker push $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:$TAG
+  - docker tag ${NAMESPACE}/gentoo-${TARGET}:$TAG
+    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}-${TARGET}:$TAG
+  - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}-${TARGET}:$TAG
   # latest
-  - docker tag grauwoelfchen/gentoo-${TARGET}:$TAG
-    $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:latest
-  - docker push $REGISTRY_HOSTNAME/grauwoelfchen/gentoo-${TARGET}:latest
+  - docker tag ${NAMESPACE}/gentoo-${TARGET}:$TAG
+    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}-${TARGET}:latest
+  - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}-${TARGET}:latest
+  - docker logout
 
 ## gentoo-amd64
 
@@ -57,6 +58,7 @@ deploy-gentoo-amd64-docker_hub:
   <<: *docker
   stage: deploy
   variables:
+    IMAGE: gentoo
     TARGET: amd64
     REGISTRY_HOSTNAME: $REGISTRY_DOCKER_HUB_HOSTNAME
     REGISTRY_USERNAME: $REGISTRY_DOCKER_HUB_USERNAME
@@ -65,14 +67,10 @@ deploy-gentoo-amd64-docker_hub:
     - build-gentoo-amd64
   before_script:
     - *install_make
-    - docker version
-    - *registry_login
   script:
     - export TAG=$(date +%Y%m%d)
     - *build_gentoo
     - *deploy_gentoo
-  after_script:
-    - docker logout
   only:
     - gentoo-amd64
   except:
@@ -82,6 +80,7 @@ deploy-gentoo-amd64-gitlab:
   <<: *docker
   stage: deploy
   variables:
+    IMAGE: portolan/gentoo
     TARGET: amd64
     REGISTRY_HOSTNAME: $REGISTRY_GITLAB_HOSTNAME
     REGISTRY_USERNAME: $REGISTRY_GITLAB_USERNAME
@@ -90,14 +89,10 @@ deploy-gentoo-amd64-gitlab:
     - build-gentoo-amd64
   before_script:
     - *install_make
-    - docker version
-    - *registry_login
   script:
     - export TAG=$(date +%Y%m%d)
     - *build_gentoo
     - *deploy_gentoo
-  after_script:
-    - docker logout
   only:
     - gentoo-amd64
   except:
@@ -123,6 +118,7 @@ deploy-gentoo-amd64-nomultilib-docker_hub:
   <<: *docker
   stage: deploy
   variables:
+    IMAGE: gentoo
     TARGET: amd64-nomultilib
     REGISTRY_HOSTNAME: $REGISTRY_DOCKER_HUB_HOSTNAME
     REGISTRY_USERNAME: $REGISTRY_DOCKER_HUB_USERNAME
@@ -131,14 +127,10 @@ deploy-gentoo-amd64-nomultilib-docker_hub:
     - build-gentoo-amd64-nomultilib
   before_script:
     - *install_make
-    - docker version
-    - *registry_login
   script:
     - export TAG=$(date +%Y%m%d)
     - *build_gentoo
     - *deploy_gentoo
-  after_script:
-    - docker logout
   only:
     - gentoo-amd64-nomultilib
   except:
@@ -148,6 +140,7 @@ deploy-gentoo-amd64-nomultilib-gitlab:
   <<: *docker
   stage: deploy
   variables:
+    IMAGE: portolan/gentoo
     TARGET: amd64-nomultilib
     REGISTRY_HOSTNAME: $REGISTRY_GITLAB_HOSTNAME
     REGISTRY_USERNAME: $REGISTRY_GITLAB_USERNAME
@@ -156,14 +149,10 @@ deploy-gentoo-amd64-nomultilib-gitlab:
     - build-gentoo-amd64-nomultilib
   before_script:
     - *install_make
-    - docker version
-    - *registry_login
   script:
     - export TAG=$(date +%Y%m%d)
     - *build_gentoo
     - *deploy_gentoo
-  after_script:
-    - docker logout
   only:
     - gentoo-amd64-nomultilib
   except:
@@ -171,18 +160,20 @@ deploy-gentoo-amd64-nomultilib-gitlab:
 
 # rust
 
-.build_rust_latest: &build_rust_latest
+.build_rust: &build_rust
   - cd rust
   - make build:${TARGET}
 
-.build_rust_version: &build_rust_version
-  - cd rust
-  - make build:${TARGET}
-  - VERSION=$(docker container run -it --rm grauwoelfchen/rust:stable rustc -V)
-  - docker tag grauwoelfchen/rust:${TARGET}
-    grauwoelfchen/rust:${VERSION}-${TARGET}
-  - docker tag grauwoelfchen/rust:${VERSION}-${TARGET}
-    $REGISTRY_HOSTNAME/grauwoelfchen/rust:${VERSION}-${TARGET}
+.deploy_rust: &deploy_rust
+  - *registry_login
+  - docker tag ${NAMESPACE}/rust:${TARGET}
+    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TAG}
+  - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TAG}
+  # default (no latest)
+  - docker tag ${NAMESPACE}/rust:${TARGET}
+    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}
+  - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}
+  - docker logout
 
 ## rust-stable
 
@@ -194,33 +185,62 @@ build-rust-stable:
   before_script:
     - *install_make
   script:
-    - *build_rust_latest
+    - *build_rust
   only:
+    - rust-stable
     - master
 
-deploy-rust-stable:
+deploy-rust-stable-docker_hub:
   <<: *docker
   stage: deploy
   variables:
+    IMAGE: rust
     TARGET: stable
+    REGISTRY_HOSTNAME: $REGISTRY_DOCKER_HUB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_DOCKER_HUB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_DOCKER_HUB_PASSWORD
+  dependencies:
+    - build-rust-stable
   before_script:
     - *install_make
-    - docker version
-    - *registry_login
   script:
-    - *build_rust_latest
-    - docker tag grauwoelfchen/rust:${TARGET}
-      $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
-    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
-  after_script:
-    - docker logout
+    - *build_rust
+    # version (e.g. 1.40.0-stable)
+    - export TAG=$(
+        docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc -V
+      )-${TARGET}
+    - *deploy_rust
   only:
-    - /^rust-stable-.*/
+    - rust-stable
   except:
-    - branches
-    - /^rust-stable-fearless-.*/
+    - tags
 
-## rust-stable-fearless
+deploy-rust-stable-gitlab:
+  <<: *docker
+  stage: deploy
+  variables:
+    IMAGE: portolan/rust
+    TARGET: stable
+    REGISTRY_HOSTNAME: $REGISTRY_GITLAB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_GITLAB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_GITLAB_PASSWORD
+  dependencies:
+    - build-rust-stable
+  before_script:
+    - *install_make
+  script:
+    - *build_rust
+    # version (e.g. 1.40.0-stable)
+    - export TAG=$(
+        docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc -V
+      )-${TARGET}
+    - *deploy_rust
+  only:
+    - rust-stable
+  except:
+    - tags
+
+## rust-stable (fearless)
 
 build-rust-stable-fearless:
   <<: *docker
@@ -229,31 +249,61 @@ build-rust-stable-fearless:
     TARGET: stable-fearless
   before_script:
     - *install_make
-    - docker version
-    - *registry_login
   script:
-    - *build_rust_latest
+    - *build_rust
   only:
+    - rust-stable
     - master
 
-deploy-rust-stable-fearless:
+deploy-rust-stable-fearless-docker_hub:
   <<: *docker
   stage: deploy
   variables:
+    IMAGE: rust
     TARGET: stable-fearless
+    REGISTRY_HOSTNAME: $REGISTRY_DOCKER_HUB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_DOCKER_HUB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_DOCKER_HUB_PASSWORD
+  dependencies:
+    - build-rust-stable-fearless
   before_script:
     - *install_make
-    - docker version
-    - *registry_login
   script:
-    - *build_rust_latest
-    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
-  after_script:
-    - docker logout
+    - *build_rust
+    # version (e.g. 1.40.0-stable-fearless)
+    - export TAG=$(
+        docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc -V
+      )-${TARGET}
+    - *deploy_rust
   only:
-    - /^rust-stable-fearless-.*/
+    - rust-stable
   except:
-    - branches
+    - tags
+
+deploy-rust-stable-fearless-gitlab:
+  <<: *docker
+  stage: deploy
+  variables:
+    IMAGE: portolan/rust
+    TARGET: stable-fearless
+    REGISTRY_HOSTNAME: $REGISTRY_GITLAB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_GITLAB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_GITLAB_PASSWORD
+  dependencies:
+    - build-rust-stable-fearless
+  before_script:
+    - *install_make
+  script:
+    - *build_rust
+    # version (e.g. 1.40.0-stable-fearless)
+    - export TAG=$(
+        docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc -V
+      )-${TARGET}
+    - *deploy_rust
+  only:
+    - rust-stable
+  except:
+    - tags
 
 ## rust-nightly
 
@@ -265,31 +315,58 @@ build-rust-nightly:
   before_script:
     - *install_make
   script:
-    - *build_rust_latest
+    - *build_rust
   only:
+    - rust-nightly
     - master
 
-deploy-rust-nightly:
+deploy-rust-nightly-docker_hub:
   <<: *docker
   stage: deploy
   variables:
+    IMAGE: rust
     TARGET: nightly
+    REGISTRY_HOSTNAME: $REGISTRY_DOCKER_HUB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_DOCKER_HUB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_DOCKER_HUB_PASSWORD
+  dependencies:
+    - build-rust-nightly
   before_script:
     - *install_make
-    - docker version
-    - *registry_login
   script:
-    - *build_rust_latest
-    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
-  after_script:
-    - docker logout
+    - *build_rust
+    # date (e.g. nightly-2020-01-02)
+    - export TAG=${TARGET}-$(date +%Y-%m-%d)
+    - *deploy_rust
   only:
-    - /^rust-nightly-.*/
+    - rust-nightly
   except:
-    - branches
-    - /^rust-nightly-fearless-.*/
+    - tags
 
-## rust-nightly-fearless
+deploy-rust-nightly-gitlab:
+  <<: *docker
+  stage: deploy
+  variables:
+    IMAGE: portolan/rust
+    TARGET: nightly
+    REGISTRY_HOSTNAME: $REGISTRY_GITLAB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_GITLAB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_GITLAB_PASSWORD
+  dependencies:
+    - build-rust-nightly
+  before_script:
+    - *install_make
+  script:
+    - *build_rust
+    # date (e.g. nightly-2020-01-02)
+    - export TAG=${TARGET}-$(date +%Y-%m-%d)
+    - *deploy_rust
+  only:
+    - rust-nightly
+  except:
+    - tags
+
+## rust-nightly (fearless)
 
 build-rust-nightly-fearless:
   <<: *docker
@@ -299,28 +376,52 @@ build-rust-nightly-fearless:
   before_script:
     - *install_make
   script:
-    - *build_rust_latest
+    - *build_rust
   only:
+    - rust-nightly
     - master
 
-deploy-rust-nightly-fearless:
+deploy-rust-nightly-fearless-docker_hub:
   <<: *docker
   stage: deploy
   variables:
+    IMAGE: rust
     TARGET: nightly-fearless
+    REGISTRY_HOSTNAME: $REGISTRY_DOCKER_HUB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_DOCKER_HUB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_DOCKER_HUB_PASSWORD
   before_script:
     - *install_make
-    - docker version
-    - *registry_login
   script:
-    - *build_rust_latest
-    - docker push $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
-  after_script:
-    - docker logout
+    - *build_rust
+    # date (e.g. nightly-fearless-2020-01-02)
+    - export TAG=${TARGET}-$(date +%Y-%m-%d)
+    - *deploy_rust
   only:
-    - /^rust-nightly-fearless-.*/
+    - rust-nightly
   except:
-    - branches
+    - tags
+
+deploy-rust-nightly-fearless-gitlab:
+  <<: *docker
+  stage: deploy
+  variables:
+    IMAGE: portolan/rust
+    TARGET: nightly-fearless
+    REGISTRY_HOSTNAME: $REGISTRY_GITLAB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_GITLAB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_GITLAB_PASSWORD
+  before_script:
+    - *install_make
+  script:
+    - *build_rust
+    # date (e.g. nightly-fearless-2020-01-02)
+    - export TAG=${TARGET}-$(date +%Y-%m-%d)
+    - *deploy_rust
+  only:
+    - rust-nightly
+  except:
+    - tags
 
 # rust-vet-tools
 

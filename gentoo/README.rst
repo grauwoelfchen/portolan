@@ -18,6 +18,8 @@ Build
 
 .. code:: zsh
 
+   $ export NAMESPACE=grauwoelfchen
+
    # latest
    % make build:amd64
    % make build:amd64-nomultilib
@@ -31,5 +33,5 @@ Run
 
 .. code:: zsh
 
-   % docker container run -it --rm grauwoelfchen/gentoo-amd64:latest bash
-   % docker container run -it --rm grauwoelfchen/gentoo-amd64-nomultilib:latest bash
+   % docker container run -it --rm <NAMESPACE>/gentoo-amd64:latest bash
+   % docker container run -it --rm <NAMESPACE>/gentoo-amd64-nomultilib:latest bash

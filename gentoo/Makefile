@@ -1,8 +1,10 @@
+NAMESPACE ?= $(USER)
+
 _build-%:
 	tag="$(subst _build-,,$@)" ; \
-	echo $${tag}; \
+	echo $(NAMESPACE)/gentoo-$(NAME):$${tag}; \
 	docker image build . \
-		-t grauwoelfchen/gentoo-$(NAME):$${tag} \
+		-t $(NAMESPACE)/gentoo-$(NAME):$${tag} \
 		--build-arg STAGE=stage3-$(NAME)
 
 build\:amd64\:%:

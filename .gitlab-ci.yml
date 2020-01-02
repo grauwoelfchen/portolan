@@ -53,14 +53,14 @@ build-gentoo-amd64:
     - gentoo-amd64
     - master
 
-deploy-gentoo-amd64-dockerhub:
+deploy-gentoo-amd64-docker_hub:
   <<: *docker
   stage: deploy
   variables:
     TARGET: amd64
-    REGISTRY_HOSTNAME: $REGISTRY_HOSTNAME
-    REGISTRY_USERNAME: $REGISTRY_USERNAME
-    REGISTRY_PASSWORD: $REGISTRY_PASSWORD
+    REGISTRY_HOSTNAME: $REGISTRY_DOCKER_HUB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_DOCKER_HUB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_DOCKER_HUB_PASSWORD
   dependencies:
     - build-gentoo-amd64
   before_script:
@@ -119,14 +119,14 @@ build-gentoo-amd64-nomultilib:
     - gentoo-amd64-nomultilib
     - master
 
-deploy-gentoo-amd64-nomultilib-dockerhub:
+deploy-gentoo-amd64-nomultilib-docker_hub:
   <<: *docker
   stage: deploy
   variables:
     TARGET: amd64-nomultilib
-    REGISTRY_HOSTNAME: $REGISTRY_HOSTNAME
-    REGISTRY_USERNAME: $REGISTRY_USERNAME
-    REGISTRY_PASSWORD: $REGISTRY_PASSWORD
+    REGISTRY_HOSTNAME: $REGISTRY_DOCKER_HUB_HOSTNAME
+    REGISTRY_USERNAME: $REGISTRY_DOCKER_HUB_USERNAME
+    REGISTRY_PASSWORD: $REGISTRY_DOCKER_HUB_PASSWORD
   dependencies:
     - build-gentoo-amd64-nomultilib
   before_script:

@@ -96,13 +96,13 @@ deploy-gentoo-amd64-nomultilib:
 
 .build_rust_latest: &build_rust_latest
   - cd rust
-  - make rust:${TARGET}
+  - make build:${TARGET}
   - docker tag grauwoelfchen/rust:${TARGET}
     $REGISTRY_HOSTNAME/grauwoelfchen/rust:${TARGET}
 
 .build_rust_version: &build_rust_version
   - cd rust
-  - make rust:${TARGET}
+  - make build:${TARGET}
   - VERSION=$(docker container run -it --rm grauwoelfchen/rust:stable rustc -V)
   - docker tag grauwoelfchen/rust:${TARGET}
     grauwoelfchen/rust:${VERSION}-${TARGET}

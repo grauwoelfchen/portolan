@@ -183,7 +183,7 @@ deploy-gentoo-amd64-nomultilib-gitlab:
 .deploy_rust_with_date: &deploy_rust_with_date
   # date (e.g. nightly-2020-01-02)
   - docker tag ${NAMESPACE}/rust:${TARGET}-${TAG}
-    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}:${TAG}
+    ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
   # version (e.g. 1.40.0-{stable|nightly} etc.)
   - export VERSION=$(

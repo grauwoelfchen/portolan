@@ -170,11 +170,12 @@ deploy-gentoo-amd64-nomultilib-gitlab:
       docker container run --rm ${NAMESPACE}/rust:${TARGET} rustc --version |
       awk '{sub(/-.*/, "", $2); print $2}'
     )-${TARGET}
-  - docker tag ${NAMESPACE}/rust:${TARGET}-${TAG}
+  - echo $VERSION
+  - docker tag ${NAMESPACE}/rust:${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
-  # default (no latest)
-  - docker tag ${NAMESPACE}/rust:${TARGET}-${TAG}
+  # default (e.g. stable)
+  - docker tag ${NAMESPACE}/rust:${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker logout
@@ -189,6 +190,7 @@ deploy-gentoo-amd64-nomultilib-gitlab:
       docker container run --rm ${NAMESPACE}/rust:${TARGET} rustc --version |
       awk '{sub(/-.*/, "", $2); print $2}'
     )-${TARGET}
+  - echo $VERSION
   - docker tag ${NAMESPACE}/rust:${TARGET}-${TAG}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}

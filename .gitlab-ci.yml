@@ -167,7 +167,7 @@ deploy-gentoo-amd64-nomultilib-gitlab:
 .deploy_rust: &deploy_rust
   # version (e.g. 1.40.0-stable)
   - export VERSION=$(
-      docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc --version |
+      docker container run --rm ${NAMESPACE}/rust:${TARGET} rustc --version |
       awk '{sub(/-.*/, "", $2); print $2}'
     )-${TARGET}
   - docker tag ${NAMESPACE}/rust:${TARGET}-${TAG}
@@ -186,7 +186,7 @@ deploy-gentoo-amd64-nomultilib-gitlab:
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
   # version (e.g. 1.40.0-{stable|nightly} etc.)
   - export VERSION=$(
-      docker container run -it --rm ${NAMESPACE}/rust:${TARGET} rustc --version |
+      docker container run --rm ${NAMESPACE}/rust:${TARGET} rustc --version |
       awk '{sub(/-.*/, "", $2); print $2}'
     )-${TARGET}
   - docker tag ${NAMESPACE}/rust:${TARGET}-${TAG}

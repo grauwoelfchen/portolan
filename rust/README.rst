@@ -6,6 +6,8 @@ This image has ``rust`` with default toolchains and ``rust-src`` component.
 ``fearless`` is an image holds updated ebuilds via ``emerge --sync`` at
 the build.
 
+* profile: ``default`` (``rustmfmt``, ``clippy``)
+* additional components: ``rust-src``
 
 Types
 -----

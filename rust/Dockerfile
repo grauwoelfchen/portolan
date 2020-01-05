@@ -22,17 +22,23 @@ RUN set -eux; \
     url="https://static.rust-lang.org/rustup/dist/${platform}/rustup-init"; \
     curl -sSfLO "$url"; \
     chmod +x rustup-init; \
+    \
     ./rustup-init -y --no-modify-path --default-toolchain none; \
-    rustup install $VERSION; \
+    \
+    rustup install $VERSION; \ # profile: default
     rustup default $VERSION; \
     rm rustup-init; \
     chmod -R a+w $RUSTUP_HOME $CARGO_HOME; \
+    \
     rustup component add rust-src; \
     \
-    rustup --version; \
     rustup show; \
+    rustup --version; \
     rustc --version; \
-    cargo --version
+    cargo --version; \
+    \
+    cargo clippy --version; \
+    cargo fmt --version
 
 WORKDIR /
 CMD ["/bin/bash"]

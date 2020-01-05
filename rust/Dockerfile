@@ -25,7 +25,7 @@ RUN set -eux; \
     \
     ./rustup-init -y --no-modify-path --default-toolchain none; \
     \
-    rustup install $VERSION; \ # profile: default
+    rustup install $VERSION; \
     rustup default $VERSION; \
     rm rustup-init; \
     chmod -R a+w $RUSTUP_HOME $CARGO_HOME; \

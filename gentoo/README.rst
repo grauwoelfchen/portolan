@@ -6,11 +6,18 @@ These images are built with stage3 for amd64.
 ``amd64-nomultilib`` is an image using nomultilib as base.
 
 
-Types
------
+Images
+------
 
 * amd64
 * amd64-nomultilib
+
+
+Types
+-----
+
+* latest (e.g. ``gentoo-amd64:latest``)
+* ``YYYYMMDD`` (e.g. ``gentoo-amd64:20200104``)
 
 
 Build
@@ -34,4 +41,9 @@ Run
 .. code:: zsh
 
    % docker container run -it --rm <NAMESPACE>/gentoo-amd64:latest bash
-   % docker container run -it --rm <NAMESPACE>/gentoo-amd64-nomultilib:latest bash
+   % docker container run -it --rm <NAMESPACE>/gentoo-amd64:20200105 bash
+
+   % docker container run -it --rm <NAMESPACE>/gentoo-amd64-nomultilib:latest \
+     bash
+   % docker container run -it --rm <NAMESPACE>/gentoo-amd64-nomultilib:20200104 \
+     bash

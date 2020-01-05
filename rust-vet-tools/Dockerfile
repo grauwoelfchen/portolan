@@ -13,10 +13,10 @@ RUN set -eux; \
     emerge -qv dev-util/kcov \
                sys-libs/binutils-libs; \
     \
-    rustup self update; \ # profile: default
+    rustup self update; \
     \
-    rustup show; \
     rustup --version; \
+    rustup show; \
     rustc --version; \
     cargo --version; \
     \

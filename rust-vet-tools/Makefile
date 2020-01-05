@@ -37,7 +37,7 @@ build\:stable-fearless\:%:
 
 build\:stable-fearless:
 	@$(MAKE_COMMAND) \
-		-s DOCKERFILE=Dockerfile-fearless \
+		-s DOCKERFILE=Dockerfile \
 		-f $(firstword $(MAKEFILE_LIST)) _build-stable-stable-fearless
 .PHONY: build\:stable-fearless
 
@@ -72,7 +72,7 @@ build\:nightly-fearless\:latest: build\:nightly-fearless
 build\:nightly-fearless\:%:
 	@date="$(subst build:nightly-fearless:,,$@)"; \
 	$(MAKE_COMMAND) \
-		-s DOCKERFILE=Dockerfile-fearless \
+		-s DOCKERFILE=Dockerfile \
 		-f $(firstword $(MAKEFILE_LIST)) _build-nightly-$${date}-nightly-fearless
 .PHONY: build\:nightly-fearless\:%
 

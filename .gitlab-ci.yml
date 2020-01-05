@@ -161,7 +161,7 @@ deploy-gentoo-amd64-nomultilib-gitlab:
 # rust
 
 .build_rust: &build_rust
-  - cd $IMAGE
+  - cd "$(basename ${IMAGE})"
   - make build:${TARGET}:${TAG}
 
 .deploy_rust: &deploy_rust

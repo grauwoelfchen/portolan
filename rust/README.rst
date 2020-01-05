@@ -44,10 +44,10 @@ Run
 
 .. code:: zsh
 
-   % docker container run -it --rm <NAMESPACE>/rust:stable rustc -V
-   % docker container run -it --rm <NAMESPACE>/rust:stable-fearless rustc -V
-   % docker container run -it --rm <NAMESPACE>/rust:1.39.0-stable rustc -V
+   % docker container run --rm <NAMESPACE>/rust:stable rustc --version
+   % docker container run --rm <NAMESPACE>/rust:stable-fearless rustc --version
+   % docker container run --rm <NAMESPACE>/rust:1.39.0-stable rustc --version
 
-   % docker container run -it --rm <NAMESPACE>/rust:nightly rustc -V
-   % docker container run -it --rm <NAMESPACE>/rust:nightly-fearless rustc -V
-   % docker container run -it --rm <NAMESPACE>/rust:nightly-2019-12-23 rustc -V
+   % docker container run --rm <NAMESPACE>/rust:nightly rustc --version
+   % docker container run --rm <NAMESPACE>/rust:nightly-fearless rustc --version
+   % docker container run --rm <NAMESPACE>/rust:nightly-2019-12-23 rustc --version

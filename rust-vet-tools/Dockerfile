@@ -13,17 +13,16 @@ RUN set -eux; \
     emerge -qv dev-util/kcov \
                sys-libs/binutils-libs; \
     \
-    rustup self update; \
-    rustup component add clippy rustfmt --toolchain stable; \
+    rustup self update; \ # profile: default
     \
-    rustup --version; \
     rustup show; \
+    rustup --version; \
     rustc --version; \
     cargo --version; \
     \
-    kcov --version; \
     cargo clippy --version; \
-    cargo fmt --version
+    cargo fmt --version; \
+    kcov --version
 
 WORKDIR /
 CMD ["/bin/bash"]

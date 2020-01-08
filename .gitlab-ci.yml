@@ -187,7 +187,7 @@ deploy-gentoo-amd64-nomultilib-gitlab:
   - export NAME="$(basename ${IMAGE})"
   - echo $NAME
   # date (e.g. nightly-2020-01-02)
-  - docker tag ${NAMESPACE}/${NAME}:${TARGET}-${TAG}
+  - docker tag ${NAMESPACE}/${NAME}:${TAG}-${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
   # version (e.g. 1.40.0-{stable|nightly} etc.)
@@ -197,11 +197,11 @@ deploy-gentoo-amd64-nomultilib-gitlab:
       awk '{sub(/-.*/, "", $2); print $2}'
     )-${TARGET}
   - echo $VERSION
-  - docker tag ${NAMESPACE}/${NAME}:${TARGET}-${TAG}
+  - docker tag ${NAMESPACE}/${NAME}:${TAG}-${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   # default (no latest)
-  - docker tag ${NAMESPACE}/${NAME}:${TARGET}-${TAG}
+  - docker tag ${NAMESPACE}/${NAME}:${TAG}-${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker logout

@@ -78,6 +78,6 @@ build\:nightly-fearless\:%:
 
 build\:nightly-fearless:
 	@$(MAKE_COMMAND) \
-		-s DOCKERFILE=Dockerfile-fearless \
+		-s DOCKERFILE=Dockerfile \
 		-f $(firstword $(MAKEFILE_LIST)) _build-nightly-nightly-fearless
 .PHONY: build\:nightly-fearless

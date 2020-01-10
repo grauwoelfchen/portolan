@@ -14,16 +14,15 @@ RUN set -eux; \
                sys-libs/binutils-libs; \
     \
     rustup self update; \
-    rustup component add clippy rustfmt --toolchain stable; \
     \
     rustup --version; \
     rustup show; \
     rustc --version; \
     cargo --version; \
     \
-    kcov --version; \
     cargo clippy --version; \
-    cargo fmt --version
+    cargo fmt --version; \
+    kcov --version
 
 WORKDIR /
 CMD ["/bin/bash"]

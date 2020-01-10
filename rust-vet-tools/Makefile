@@ -37,7 +37,7 @@ build\:stable-fearless\:%:
 
 build\:stable-fearless:
 	@$(MAKE_COMMAND) \
-		-s DOCKERFILE=Dockerfile-fearless \
+		-s DOCKERFILE=Dockerfile \
 		-f $(firstword $(MAKEFILE_LIST)) _build-stable-stable-fearless
 .PHONY: build\:stable-fearless
 

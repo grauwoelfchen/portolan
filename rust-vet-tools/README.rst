@@ -6,10 +6,9 @@ for testing or vetting like lint, coverage etc.
 
 .. _grauwoelfchen/rust: https://hub.docker.com/r/grauwoelfchen/rust/
 
+* profile: ``default`` (``rustmfmt``, ``clippy``)
+* additional components: ``rust-src``
 * kcov (with ``sys-libs/binutils-libs`` and its dependencies)
-* rustfmt
-* clippy
-
 
 Build
 -----

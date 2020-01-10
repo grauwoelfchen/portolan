@@ -161,43 +161,47 @@ deploy-gentoo-amd64-nomultilib-gitlab:
 # rust
 
 .build_rust: &build_rust
-  - cd $IMAGE
+  - cd "$(basename ${IMAGE})"
   - make build:${TARGET}:${TAG}
 
 .deploy_rust: &deploy_rust
+  - export NAME="$(basename ${IMAGE})"
+  - echo $NAME
   # version (e.g. 1.40.0-stable)
   - export VERSION=$(
-      docker container run --rm ${NAMESPACE}/${IMAGE}:${TARGET}
+      docker container run --rm ${NAMESPACE}/${NAME}:${TARGET}
       rustc --version |
       awk '{sub(/-.*/, "", $2); print $2}'
     )-${TARGET}
   - echo $VERSION
-  - docker tag ${NAMESPACE}/${IMAGE}:${TARGET}
+  - docker tag ${NAMESPACE}/${NAME}:${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   # default (e.g. stable)
-  - docker tag ${NAMESPACE}/${IMAGE}:${TARGET}
+  - docker tag ${NAMESPACE}/${NAME}:${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker logout
 
 .deploy_rust_with_date: &deploy_rust_with_date
+  - export NAME="$(basename ${IMAGE})"
+  - echo $NAME
   # date (e.g. nightly-2020-01-02)
-  - docker tag ${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
+  - docker tag ${NAMESPACE}/${NAME}:${TAG}-${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
   # version (e.g. 1.40.0-{stable|nightly} etc.)
   - export VERSION=$(
-      docker container run --rm ${NAMESPACE}/${IMAGE}:${TARGET}
+      docker container run --rm ${NAMESPACE}/${NAME}:${TARGET}
       rustc --version |
       awk '{sub(/-.*/, "", $2); print $2}'
     )-${TARGET}
   - echo $VERSION
-  - docker tag ${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
+  - docker tag ${NAMESPACE}/${NAME}:${TAG}-${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   - docker push ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${VERSION}
   # default (no latest)
-  - docker tag ${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
+  - docker tag ${NAMESPACE}/${NAME}:${TAG}-${TARGET}
     ${REGISTRY_HOSTNAME}/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}
   - docker logout

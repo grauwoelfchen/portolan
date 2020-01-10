@@ -12,7 +12,12 @@ These images are all built on top of `gentoo linux`_ images which are hosted on
 .. _gentoo linux: https://www.gentoo.org/
 .. _Docker Hub: https://hub.docker.com/u/gentoo/
 
-https://hub.docker.com/r/grauwoelfchen/
+
+Registries
+----------
+
+* https://hub.docker.com/r/grauwoelfchen/
+* https://gitlab.com/grauwoelfchen/portolan/container_registry
 
 
 Base images
@@ -28,29 +33,33 @@ Base images
 Docker images
 -------------
 
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| Name                       | Description                                          | Tags             | Build                           |
-+============================+======================================================+==================+=================================+
-| `gentoo-amd64`_            | busybox base gentoo's stage3 for amd64 and portage   | latest           | |gentoo-amd64-build|            |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| `gentoo-amd64-nomultilib`_ | ``nomultilib`` version (amd64-nomultilib)            | latest           | |gentoo-amd64-nomultilib-build| |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| `rust`_                    | stable rust with source                              | stable           | |rust-stable-build|             |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| `rust`_                    | stable + latest portage with ``emerge --sync`` ;-)   | stable-fearless  | |rust-stable-fearless-build|    |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| `rust`_                    | nightly rust with source                             | nightly          | |rust-nightly-build|            |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| `rust`_                    | nightly + latest portage with ``emerge --sync``` ;-) | nightly-fearless | |rust-nightly-fearless-build|   |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| `rust-vet-tools`_          | stable rust with rustfmt, clippy and kcov            | stable           | |rust-vet-tools-stable-build|   |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| `rust-vet-tools`_          | nightly rust with rustfmt, clippy and kcov           | nightly          | |rust-vet-tools-nightly-build|  |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| `rust-dev-tools`_          | TODO                                                 | stable           |                                 |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
-| `rust-dev-tools`_          | TODO                                                 | nightly          |                                 |
-+----------------------------+------------------------------------------------------+------------------+---------------------------------+
++----------------------------+----------------------------------------------------+-----------------------------------------------+---------------------------------+
+| Name                       | Description                                        | Tags                                          | Build                           |
++============================+====================================================+===============================================+=================================+
+| `gentoo-amd64`_            | busybox base gentoo's stage3 for amd64 and portage | e.g.                                          | |gentoo-amd64-build|            |
+|                            |                                                    | latest                                        |                                 |
+|                            |                                                    | 20200104                                      |                                 |
++----------------------------+----------------------------------------------------+-----------------------------------------------+---------------------------------+
+| `gentoo-amd64-nomultilib`_ | ``nomultilib`` version (amd64-nomultilib)          | e.g.                                          | |gentoo-amd64-nomultilib-build| |
+|                            |                                                    | latest                                        |                                 |
+|                            |                                                    | 20200104                                      |                                 |
++----------------------------+----------------------------------------------------+-----------------------------------------------+---------------------------------+
+| `rust`_                    | xxx-fearless                                       | e.g.                                          | |rust-stable-build|             |
+|                            | latest portage with ``emerge --sync`` ;-)          | stable, 1.40.0-stable                         | |rust-nightly-build|            |
+|                            |                                                    | stable-fearless, 1.40.0-stable-fearless       |                                 |
+|                            |                                                    | nightly, nightly-2020-01-02                   |                                 |
+|                            |                                                    | nightly-fearless, nightly-fearless-2020-01-02 |                                 |
++----------------------------+----------------------------------------------------+-----------------------------------------------+---------------------------------+
+| `rust-vet-tools`_          | rust default profile (rustfmt, clippy) with kcov   | e.g.                                          | |rust-vet-tools-stable-build|   |
+|                            |                                                    | stable, 1.40.0-stable                         | |rust-vet-tools-nightly-build|  |
+|                            |                                                    | stable-fearless, 1.40.0-stable-fearless       |                                 |
+|                            |                                                    | nightly, nightly-2020-01-02                   |                                 |
+|                            |                                                    | nightly-fearless, nightly-fearless-2020-01-02 |                                 |
++----------------------------+----------------------------------------------------+-----------------------------------------------+---------------------------------+
+| `rust-dev-tools`_          | TODO                                               | TODO                                          |                                 |
+|                            |                                                    |                                               |                                 |
+|                            |                                                    |                                               |                                 |
++----------------------------+----------------------------------------------------+-----------------------------------------------+---------------------------------+
 
 .. _gentoo-amd64: https://hub.docker.com/r/grauwoelfchen/gentoo-amd64/
 .. _gentoo-amd64-nomultilib: https://hub.docker.com/r/grauwoelfchen/gentoo-amd64-nomultilib/
@@ -67,14 +76,8 @@ Docker images
 .. |rust-stable-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-stable/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-stable
 
-.. |rust-stable-fearless-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-stable-fearless/pipeline.svg
-   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-stable-fearless
-
 .. |rust-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly
-
-.. |rust-nightly-fearless-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-nightly-fearless/pipeline.svg
-   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly-fearless
 
 .. |rust-vet-tools-stable-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-vet-tools-stable/pipeline.svg
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-vet-tools-stable/pipeline.svg
@@ -89,9 +92,7 @@ TODO
 ****
 
 * Create rust-dev-tools
-* Add tag using date for gentoo images (like 20191210)
-* Add tag using version and base image's tag for rust images (like 1.39.0-stable-20191210, 1.41.0-nightly-20191211)
-* Use build arg (Remove unnecesary Dockerfile and subdirectory)
+* Remove each build stages
 
 
 Development
@@ -113,7 +114,7 @@ License
 .. code:: text
 
    Portolan
-   Copyright 2018 Yasuhiro Asaka
+   Copyright 2018-2020 Yasuhiro Яша Asaka
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

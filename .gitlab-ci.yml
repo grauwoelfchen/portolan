@@ -192,7 +192,7 @@ deploy-gentoo-amd64-nomultilib-gitlab:
   - docker push $REGISTRY_HOSTNAME/${NAMESPACE}/${IMAGE}:${TARGET}-${TAG}
   # version (e.g. 1.40.0-{stable|nightly} etc.)
   - export VERSION=$(
-      docker container run --rm ${NAMESPACE}/${NAME}:${TARGET}
+      docker container run --rm ${NAMESPACE}/${NAME}:${TARGET}-${TAG}
       rustc --version |
       awk '{sub(/-.*/, "", $2); print $2}'
     )-${TARGET}

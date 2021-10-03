@@ -1,3 +1,7 @@
+Sun 03 Oct 2021 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Update base images from gentoo/stage3 (old images like stage3-amd64 are
+		deprecated)
+
 Sun 04 Nov 2019 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Add gentoo-amd64 and gentoo-amd64-nomultilib
 

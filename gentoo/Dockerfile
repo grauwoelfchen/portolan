@@ -1,6 +1,8 @@
 ARG STAGE
+ARG TAG
+
 FROM gentoo/portage:latest as portage
-FROM gentoo/${STAGE}:latest
+FROM gentoo/${STAGE}:${TAG}
 
 LABEL maintainer="Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"
 

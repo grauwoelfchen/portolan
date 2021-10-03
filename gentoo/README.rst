@@ -1,13 +1,19 @@
 Gentoo
 ======
 
-These images are built with stage3 for amd64.
+These images are built with *OpenRC* based stage3 for amd64 arch.
 
 ``amd64-nomultilib`` is an image using nomultilib as base.
 
 
 Images
 ------
+
+The previous images of stage3 like ``stage3-amd64`` have been deprecated.
+We use gentoo/stage3:amd64-openrc{,yyyymmdd} (with *OpenRC*) for
+compatibilities, instead.
+
+See https://github.com/gentoo/gentoo-docker-images#deprecated
 
 * amd64
 * amd64-nomultilib

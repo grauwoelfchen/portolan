@@ -1,11 +1,13 @@
 NAMESPACE ?= $(USER)
+STAGE := stage3
 
 _build-%:
 	tag="$(subst _build-,,$@)" ; \
 	echo $(NAMESPACE)/gentoo-$(NAME):$${tag}; \
 	docker image build . \
-		-t $(NAMESPACE)/gentoo-$(NAME):$${tag} \
-		--build-arg STAGE=stage3-$(NAME)
+		--tag $(NAMESPACE)/gentoo-$(NAME):$${tag} \
+		--build-arg STAGE=$(STAGE) \
+		--build-arg TAG=$(NAME)-openrc
 
 build\:amd64\:%:
 	@tag="$(subst build:amd64:,,$@)"; \

@@ -58,7 +58,10 @@ deploy-gentoo-amd64-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "gentoo-amd64"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: gentoo
     TARGET: amd64
@@ -73,16 +76,15 @@ deploy-gentoo-amd64-docker_hub:
     - export TAG=$(date +%Y%m%d)
     - *build_gentoo
     - *deploy_gentoo
-  only:
-    - gentoo-amd64
-  except:
-    - tags
 
 deploy-gentoo-amd64-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "gentoo-amd64"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/gentoo
     TARGET: amd64
@@ -97,10 +99,6 @@ deploy-gentoo-amd64-gitlab:
     - export TAG=$(date +%Y%m%d)
     - *build_gentoo
     - *deploy_gentoo
-  only:
-    - gentoo-amd64
-  except:
-    - tags
 
 ## gentoo-amd64-nomultilib
 
@@ -122,7 +120,10 @@ deploy-gentoo-amd64-nomultilib-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "gentoo-amd64-nomultilib"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: gentoo
     TARGET: amd64-nomultilib
@@ -137,16 +138,15 @@ deploy-gentoo-amd64-nomultilib-docker_hub:
     - export TAG=$(date +%Y%m%d)
     - *build_gentoo
     - *deploy_gentoo
-  only:
-    - gentoo-amd64-nomultilib
-  except:
-    - tags
 
 deploy-gentoo-amd64-nomultilib-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "gentoo-amd64-nomultilib"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/gentoo
     TARGET: amd64-nomultilib
@@ -161,10 +161,6 @@ deploy-gentoo-amd64-nomultilib-gitlab:
     - export TAG=$(date +%Y%m%d)
     - *build_gentoo
     - *deploy_gentoo
-  only:
-    - gentoo-amd64-nomultilib
-  except:
-    - tags
 
 # rust
 
@@ -235,7 +231,10 @@ deploy-rust-stable-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-stable"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: rust
     TARGET: stable
@@ -251,16 +250,15 @@ deploy-rust-stable-docker_hub:
     - *build_rust
     - *registry_login
     - *deploy_rust
-  only:
-    - rust-stable
-  except:
-    - tags
 
 deploy-rust-stable-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-stable"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/rust
     TARGET: stable
@@ -276,10 +274,6 @@ deploy-rust-stable-gitlab:
     - *build_rust
     - *registry_login
     - *deploy_rust
-  only:
-    - rust-stable
-  except:
-    - tags
 
 ## rust-stable (fearless)
 
@@ -302,7 +296,10 @@ deploy-rust-stable-fearless-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-stable"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: rust
     TARGET: stable-fearless
@@ -318,16 +315,15 @@ deploy-rust-stable-fearless-docker_hub:
     - *build_rust
     - *registry_login
     - *deploy_rust
-  only:
-    - rust-stable
-  except:
-    - tags
 
 deploy-rust-stable-fearless-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-stable"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/rust
     TARGET: stable-fearless
@@ -343,10 +339,6 @@ deploy-rust-stable-fearless-gitlab:
     - *build_rust
     - *registry_login
     - *deploy_rust
-  only:
-    - rust-stable
-  except:
-    - tags
 
 ## rust-nightly
 
@@ -369,7 +361,10 @@ deploy-rust-nightly-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-nightly"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: rust
     TARGET: nightly
@@ -385,16 +380,15 @@ deploy-rust-nightly-docker_hub:
     - *build_rust
     - *registry_login
     - *deploy_rust_with_date
-  only:
-    - rust-nightly
-  except:
-    - tags
 
 deploy-rust-nightly-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-nightly"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/rust
     TARGET: nightly
@@ -410,10 +404,6 @@ deploy-rust-nightly-gitlab:
     - *build_rust
     - *registry_login
     - *deploy_rust_with_date
-  only:
-    - rust-nightly
-  except:
-    - tags
 
 ## rust-nightly (fearless)
 
@@ -436,7 +426,10 @@ deploy-rust-nightly-fearless-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-nightly"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: rust
     TARGET: nightly-fearless
@@ -450,16 +443,15 @@ deploy-rust-nightly-fearless-docker_hub:
     - *build_rust
     - *registry_login
     - *deploy_rust_with_date
-  only:
-    - rust-nightly
-  except:
-    - tags
 
 deploy-rust-nightly-fearless-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-nightly"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/rust
     TARGET: nightly-fearless
@@ -473,10 +465,6 @@ deploy-rust-nightly-fearless-gitlab:
     - *build_rust
     - *registry_login
     - *deploy_rust_with_date
-  only:
-    - rust-nightly
-  except:
-    - tags
 
 # rust-vet-tools
 
@@ -501,7 +489,10 @@ deploy-rust-vet-tools-stable-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-vet-tools-stable"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: rust-vet-tools
     TARGET: stable
@@ -517,16 +508,15 @@ deploy-rust-vet-tools-stable-docker_hub:
     - *build_rust
     - *registry_login
     - *deploy_rust
-  only:
-    - rust-vet-tools-stable
-  except:
-    - tags
 
 deploy-rust-vet-tools-stable-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-vet-tools-stable"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/rust-vet-tools
     TARGET: stable
@@ -542,10 +532,6 @@ deploy-rust-vet-tools-stable-gitlab:
     - *build_rust
     - *registry_login
     - *deploy_rust
-  only:
-    - rust-vet-tools-stable
-  except:
-    - tags
 
 ## rust-vet-tools-stable (fearless)
 
@@ -568,7 +554,10 @@ deploy-rust-vet-tools-stable-fearless-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-vet-tools-stable"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: rust-vet-tools
     TARGET: stable-fearless
@@ -584,16 +573,15 @@ deploy-rust-vet-tools-stable-fearless-docker_hub:
     - *build_rust
     - *registry_login
     - *deploy_rust
-  only:
-    - rust-vet-tools-stable
-  except:
-    - tags
 
 deploy-rust-vet-tools-stable-fearless-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-vet-tools-stable"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/rust-vet-tools
     TARGET: stable-fearless
@@ -609,10 +597,6 @@ deploy-rust-vet-tools-stable-fearless-gitlab:
     - *build_rust
     - *registry_login
     - *deploy_rust
-  only:
-    - rust-vet-tools-stable
-  except:
-    - tags
 
 ## rust-vet-tools-nightly
 
@@ -635,7 +619,10 @@ deploy-rust-vet-tools-nightly-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-vet-tools-nightly"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: rust-vet-tools
     TARGET: nightly
@@ -651,16 +638,15 @@ deploy-rust-vet-tools-nightly-docker_hub:
     - *build_rust
     - *registry_login
     - *deploy_rust_with_date
-  only:
-    - rust-vet-tools-nightly
-  except:
-    - tags
 
 deploy-rust-vet-tools-nightly-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-vet-tools-nightly"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/rust-vet-tools
     TARGET: nightly
@@ -676,10 +662,6 @@ deploy-rust-vet-tools-nightly-gitlab:
     - *build_rust
     - *registry_login
     - *deploy_rust_with_date
-  only:
-    - rust-vet-tools-nightly
-  except:
-    - tags
 
 ## rust-vet-tools-nightly (fearless)
 
@@ -702,7 +684,10 @@ deploy-rust-vet-tools-nightly-fearless-docker_hub:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-vet-tools-nightly"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: rust-vet-tools
     TARGET: nightly-fearless
@@ -716,16 +701,15 @@ deploy-rust-vet-tools-nightly-fearless-docker_hub:
     - *build_rust
     - *registry_login
     - *deploy_rust_with_date
-  only:
-    - rust-vet-tools-nightly
-  except:
-    - tags
 
 deploy-rust-vet-tools-nightly-fearless-gitlab:
   <<: *docker
   stage: deploy
   rules:
-    if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_COMMIT_BRANCH == "rust-vet-tools-nightly"
+    - if: $CI_COMMIT_TAG
+      when: never
   variables:
     IMAGE: portolan/rust-vet-tools
     TARGET: nightly-fearless
@@ -739,9 +723,5 @@ deploy-rust-vet-tools-nightly-fearless-gitlab:
     - *build_rust
     - *registry_login
     - *deploy_rust_with_date
-  only:
-    - rust-vet-tools-nightly
-  except:
-    - tags
 
 # rust-dev-tools

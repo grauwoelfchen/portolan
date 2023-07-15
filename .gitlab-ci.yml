@@ -57,6 +57,8 @@ build-gentoo-amd64:
 deploy-gentoo-amd64-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: gentoo
     TARGET: amd64
@@ -79,6 +81,8 @@ deploy-gentoo-amd64-docker_hub:
 deploy-gentoo-amd64-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/gentoo
     TARGET: amd64
@@ -117,6 +121,8 @@ build-gentoo-amd64-nomultilib:
 deploy-gentoo-amd64-nomultilib-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: gentoo
     TARGET: amd64-nomultilib
@@ -139,6 +145,8 @@ deploy-gentoo-amd64-nomultilib-docker_hub:
 deploy-gentoo-amd64-nomultilib-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/gentoo
     TARGET: amd64-nomultilib
@@ -226,6 +234,8 @@ build-rust-stable:
 deploy-rust-stable-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: rust
     TARGET: stable
@@ -249,6 +259,8 @@ deploy-rust-stable-docker_hub:
 deploy-rust-stable-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/rust
     TARGET: stable
@@ -289,6 +301,8 @@ build-rust-stable-fearless:
 deploy-rust-stable-fearless-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: rust
     TARGET: stable-fearless
@@ -312,6 +326,8 @@ deploy-rust-stable-fearless-docker_hub:
 deploy-rust-stable-fearless-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/rust
     TARGET: stable-fearless
@@ -352,6 +368,8 @@ build-rust-nightly:
 deploy-rust-nightly-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: rust
     TARGET: nightly
@@ -375,6 +393,8 @@ deploy-rust-nightly-docker_hub:
 deploy-rust-nightly-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/rust
     TARGET: nightly
@@ -415,6 +435,8 @@ build-rust-nightly-fearless:
 deploy-rust-nightly-fearless-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: rust
     TARGET: nightly-fearless
@@ -436,6 +458,8 @@ deploy-rust-nightly-fearless-docker_hub:
 deploy-rust-nightly-fearless-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/rust
     TARGET: nightly-fearless
@@ -476,6 +500,8 @@ build-rust-vet-tools-stable:
 deploy-rust-vet-tools-stable-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: rust-vet-tools
     TARGET: stable
@@ -499,6 +525,8 @@ deploy-rust-vet-tools-stable-docker_hub:
 deploy-rust-vet-tools-stable-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/rust-vet-tools
     TARGET: stable
@@ -539,6 +567,8 @@ build-rust-vet-tools-stable-fearless:
 deploy-rust-vet-tools-stable-fearless-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: rust-vet-tools
     TARGET: stable-fearless
@@ -562,6 +592,8 @@ deploy-rust-vet-tools-stable-fearless-docker_hub:
 deploy-rust-vet-tools-stable-fearless-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/rust-vet-tools
     TARGET: stable-fearless
@@ -602,6 +634,8 @@ build-rust-vet-tools-nightly:
 deploy-rust-vet-tools-nightly-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: rust-vet-tools
     TARGET: nightly
@@ -625,6 +659,8 @@ deploy-rust-vet-tools-nightly-docker_hub:
 deploy-rust-vet-tools-nightly-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/rust-vet-tools
     TARGET: nightly
@@ -665,6 +701,8 @@ build-rust-vet-tools-nightly-fearless:
 deploy-rust-vet-tools-nightly-fearless-docker_hub:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: rust-vet-tools
     TARGET: nightly-fearless
@@ -686,6 +724,8 @@ deploy-rust-vet-tools-nightly-fearless-docker_hub:
 deploy-rust-vet-tools-nightly-fearless-gitlab:
   <<: *docker
   stage: deploy
+  rules:
+    if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     IMAGE: portolan/rust-vet-tools
     TARGET: nightly-fearless

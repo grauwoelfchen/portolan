@@ -21,7 +21,7 @@ stages:
       --password-stdin $REGISTRY_HOSTNAME
 
 .install_make: &install_make
-  - apk add --no-cache make
+  - apk add make
 
 # gentoo
 

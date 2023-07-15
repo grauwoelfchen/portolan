@@ -5,6 +5,7 @@ _build-%:
 	tag="$(subst _build-,,$@)" ; \
 	echo $(NAMESPACE)/gentoo-$(NAME):$${tag}; \
 	docker image build . \
+	  --cache-from $(NAMESPACE)/gentoo-$(NAME):$${tag} \
 		--tag $(NAMESPACE)/gentoo-$(NAME):$${tag} \
 		--build-arg STAGE=$(STAGE) \
 		--build-arg TAG=$(NAME)-openrc

@@ -9,6 +9,8 @@ for testing or vetting like lint, coverage etc.
 * profile: ``default`` (``rustmfmt``, ``clippy``)
 * additional components: ``rust-src``
 * kcov (with ``sys-libs/binutils-libs`` and its dependencies)
+* grcov
+* xmllint (from ``dev-libs/libxml2``)
 
 Build
 -----
@@ -41,7 +43,9 @@ Run
      rustc --version; \
      cargo fmt --version; \
      cargo clippy --version; \
-     kcov --version
+     kcov --version; \
+     grcov --version; \
+     xmllint --version;
 
    % docker container run --rm <NAMESPACE>/rust:stable-fearless ...<snip>
    % docker container run --rm <NAMESPACE>/rust:1.39.0-stable ...<snip>

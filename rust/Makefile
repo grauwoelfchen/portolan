@@ -5,6 +5,7 @@ _build-stable-%:
 	tag="$(subst _build-stable-,,$@)" ; \
 	echo $(NAMESPACE)/rust:$${tag}; \
 	docker image build . \
+	  --cache-from $(NAMESPACE)/rust:$${tag} \
 	  --file $(DOCKERFILE) \
 		--tag $(NAMESPACE)/rust:$${tag} \
 		--build-arg ARCH=amd64-nomultilib \
@@ -47,6 +48,7 @@ _build-nightly-%:
 	tag="$(subst _build-nightly-,,$@)" ; \
 	echo $${tag}; \
 	docker image build . \
+	  --cache-from $(NAMESPACE)/rust:$${tag} \
 	  --file $(DOCKERFILE) \
 		--tag $(NAMESPACE)/rust:$${tag} \
 		--build-arg ARCH=amd64-nomultilib \

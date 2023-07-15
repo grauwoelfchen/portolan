@@ -13,6 +13,7 @@ COPY setup-grcov.sh .
 RUN set -eux; \
     emerge -qv \
       dev-libs/elfutils \
+      dev-libs/libxml2 \
       dev-util/cmake \
       sys-libs/binutils-libs; \
     \

@@ -1,3 +1,6 @@
+Wed 14 Sep 2022 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Fix download URL in grcov install script for rust-vet-tools
+
 Sun 03 Oct 2021 Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Update base images from gentoo/stage3 (old images like stage3-amd64 are
 		deprecated)

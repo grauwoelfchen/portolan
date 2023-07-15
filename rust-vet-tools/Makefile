@@ -5,6 +5,7 @@ _build-stable-%:
 	tag="$(subst _build-stable-,,$@)" ; \
 	echo $(NAMESPACE)/rust-vet-tools:$${tag}; \
 	docker image build . \
+	  --cache-from $(NAMESPACE)/rust-vet-tools:$${tag} \
 	  --file $(DOCKERFILE) \
 		--tag $(NAMESPACE)/rust-vet-tools:$${tag} \
 		--build-arg BASE=$${tag}

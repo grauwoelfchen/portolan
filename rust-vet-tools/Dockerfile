@@ -21,6 +21,7 @@ RUN set -eux; \
     sh setup-grcov.sh; \
     \
     rustup self update; \
+    rustup component add llvm-tools-preview; \
     \
     rustup --version; \
     rustup show; \

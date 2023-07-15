@@ -10,6 +10,9 @@ stages:
   image: docker:latest
   services:
     - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
 
 .registry_login:
   - &registry_login
@@ -24,6 +27,7 @@ stages:
 
 .build_gentoo: &build_gentoo
   - cd gentoo
+  - docker pull ${NAMESPACE}/gentoo-${TARGET}:${TAG} || true
   - make build:${TARGET}:${TAG}
 
 .deploy_gentoo: &deploy_gentoo
@@ -165,7 +169,9 @@ deploy-gentoo-amd64-nomultilib-gitlab:
 # rust
 
 .build_rust: &build_rust
-  - cd "$(basename ${IMAGE})"
+  - export NAME="$(basename ${IMAGE})"
+  - cd $NAME
+  - docker pull ${NAMESPACE}/${NAME}:${TARGET} || true
   - make build:${TARGET}:${TAG}
 
 .deploy_rust: &deploy_rust

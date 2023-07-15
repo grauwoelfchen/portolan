@@ -12,7 +12,7 @@ work_dir="$(dirname $(readlink -f "${0}"))/kcov"
 
 kcov_cmd="${dest_dir}/bin/kcov"
 kcov_url="https://github.com/SimonKagstrom/kcov/archive"
-kcov_ver="v38"
+kcov_ver="v41"
 
 if [[ -f "${kcov_cmd}" && "${force_install}" != "true" ]]; then
   echo "kcov already installed at ${kcov_cmd}"

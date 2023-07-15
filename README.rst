@@ -16,6 +16,8 @@ These images are all built on top of `gentoo linux`_ images which are hosted on
 Registries
 ----------
 
+**Build Frequency**: once per month
+
 * https://hub.docker.com/r/grauwoelfchen/
 * https://gitlab.com/grauwoelfchen/portolan/container_registry
 

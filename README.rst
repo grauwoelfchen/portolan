@@ -82,10 +82,10 @@ Docker images
    :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-nightly
 
 .. |rust-vet-tools-stable-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-vet-tools-stable/pipeline.svg
-   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-vet-tools-stable/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-vet-tools-stable
 
 .. |rust-vet-tools-nightly-build| image:: https://gitlab.com/grauwoelfchen/portolan/badges/rust-vet-tools-nightly/pipeline.svg
-   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-vet-tools-nightly/pipeline.svg
+   :target: https://gitlab.com/grauwoelfchen/portolan/commits/rust-vet-tools-nightly
 
 
 
